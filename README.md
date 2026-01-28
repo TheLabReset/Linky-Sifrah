@@ -1446,4 +1446,4 @@ Desarrollado por **Reset Agency** (Lima, Perú) para **San Fernando**.
 
 **Versión**: 2.1.0
 **Bundler**: Vite 5.4.0
-**Última actualización**: Enero 2025
+**Última actualización**: Enero 2026
