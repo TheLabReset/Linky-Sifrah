@@ -291,6 +291,8 @@ utm_content=ecom_META_pollo
 | **Interacciones** | int | Engagement con contenido (likes, comentarios, shares) |
 | **Reproducciones** | rpr | Visualización de video |
 | **Alcance** | alc | Maximizar impresiones únicas |
+| **Registros** | registros | Captación de leads/registros |
+| **+ Personalizado** | (custom) | Objetivo personalizado definido por el usuario |
 
 ---
 
@@ -753,7 +755,8 @@ export const OBJ_MAP = {
   conversiones: 'conv',
   interacciones: 'int',
   reproducciones: 'rpr',
-  alcance: 'alc'
+  alcance: 'alc',
+  registros: 'registros'
 }
 
 // Estado global del historial

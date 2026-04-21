@@ -44,6 +44,11 @@ export function setupListeners() {
     $('medium').value = e.target.value;
   });
 
+  // Objetivo
+  $('objetivo').addEventListener('change', e =>
+    $('objetivoCustom').classList.toggle('hidden', e.target.value !== 'custom')
+  );
+
   // Tipo Campaña
   $('tipoCampana').addEventListener('change', e =>
     $('campanaCustom').classList.toggle('hidden', e.target.value !== 'custom')
@@ -60,6 +65,7 @@ export function setupListeners() {
   );
 
   // Validación solo para campos UTM (NO para URL)
+  $('objetivoCustom').addEventListener('input', cleanInput);
   $('campanaCustom').addEventListener('input', cleanInput);
   $('motivoCustom').addEventListener('input', cleanInput);
   $('codigoCustom').addEventListener('input', cleanInput);

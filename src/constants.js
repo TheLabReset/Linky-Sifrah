@@ -19,7 +19,8 @@ export const OBJ_MAP = {
   conversiones: 'conv',
   interacciones: 'int',
   reproducciones: 'rpr',
-  alcance: 'alc'
+  alcance: 'alc',
+  registros: 'registros'
 };
 
 /* --- Estado Global del Historial --- */

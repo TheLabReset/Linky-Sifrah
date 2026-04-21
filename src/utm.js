@@ -29,7 +29,7 @@ export function generateUTM(e) {
   const division = g('division');
   const plataforma = g('plataforma');
   const medium = g('medium') || '';
-  const objetivo = g('objetivo');
+  const objetivo = g('objetivo') === 'custom' ? sanitize(g('objetivoCustom')) : g('objetivo');
   const tipoCampana = g('tipoCampana') === 'custom' ? sanitize(g('campanaCustom')) : g('tipoCampana');
   const mes = g('mes');
   const ano = g('ano');
@@ -48,6 +48,9 @@ export function generateUTM(e) {
   }
 
   // Validar texto personalizado
+  if (g('objetivo') === 'custom' && !validateText(objetivo)) {
+    return toast('Objetivo contiene caracteres no permitidos');
+  }
   if (g('tipoCampana') === 'custom' && !validateText(tipoCampana)) {
     return toast('Tipo de campaña contiene caracteres no permitidos');
   }
@@ -61,7 +64,8 @@ export function generateUTM(e) {
   // Construir UTM
   const source = PLATFORM_MAP[plataforma]?.n || plataforma;
   const mediumFinal = medium || 'paid-social';
-  const campaign = `${division}_${OBJ_MAP[objetivo] || objetivo}_${tipoCampana}_${mes}_${ano}`;
+  const objetivoCode = g('objetivo') === 'custom' ? objetivo : (OBJ_MAP[objetivo] || objetivo);
+  const campaign = `${division}_${objetivoCode}_${tipoCampana}_${mes}_${ano}`;
 
   let content = '';
   const placementPart = plataforma === 'facebook'
