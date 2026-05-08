@@ -482,3 +482,60 @@
 .config-modal-body::-webkit-scrollbar-thumb:hover {
   background: #00996B;
 }
+
+/* =====================================================
+   Sifrah · Config UI (catálogos editables en modal de Ajustes)
+   ===================================================== */
+.config-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: var(--space-md);
+}
+.config-item {
+  background: #F8F8F8;
+  border: 1px solid #E0E0E0;
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.config-item-info { flex: 1; min-width: 0; }
+.config-item-info strong {
+  display: block;
+  color: #1A1A1A;
+  margin-bottom: 2px;
+  word-break: break-word;
+}
+.config-item-info small {
+  color: #666;
+  font-size: 11px;
+  word-break: break-all;
+}
+.config-add {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: end;
+}
+@media (max-width: 600px) {
+  .config-add { grid-template-columns: 1fr; }
+}
+.config-add input {
+  background: #FFFFFF;
+  color: #1A1A1A;
+  border: 1px solid #DDD;
+}
+.is-core-badge {
+  display: inline-block;
+  background: var(--glow-color);
+  color: var(--accent);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
