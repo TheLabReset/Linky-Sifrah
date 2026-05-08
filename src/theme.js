@@ -9,17 +9,18 @@ import { $, toast } from './utils.js';
 import { STORAGE_KEYS } from './constants.js';
 
 const VALID_THEMES = ['dark', 'light', 'ocean', 'forest', 'pink'];
-let current = 'dark';
+const DEFAULT_THEME = 'pink';
+let current = DEFAULT_THEME;
 
 /** Carga el tema guardado y lo aplica al documento. */
 export function loadTheme() {
-  let saved = 'dark';
+  let saved = DEFAULT_THEME;
   try {
-    saved = localStorage.getItem(STORAGE_KEYS.theme) || 'dark';
+    saved = localStorage.getItem(STORAGE_KEYS.theme) || DEFAULT_THEME;
   } catch {
     /* localStorage inaccesible */
   }
-  if (!VALID_THEMES.includes(saved)) saved = 'dark';
+  if (!VALID_THEMES.includes(saved)) saved = DEFAULT_THEME;
   current = saved;
   document.documentElement.setAttribute('data-theme', saved);
   updateThemeMenu();
