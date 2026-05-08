@@ -1,7 +1,7 @@
 {
-  "name": "linky-sf",
-  "version": "2.1.0",
-  "description": "Generador de UTMs para San Fernando - Reset Agency",
+  "name": "linky-sifrah",
+  "version": "0.1.0-beta",
+  "description": "Generador de UTMs para Sifrah - Reset Agency",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,12 +17,12 @@
     "utm",
     "generator",
     "marketing",
-    "san-fernando"
+    "sifrah"
   ],
   "config": {
     "brand": {
-      "name": "San Fernando",
-      "code": "SF"
+      "name": "Sifrah",
+      "code": "SIFRAH"
     }
   }
 }

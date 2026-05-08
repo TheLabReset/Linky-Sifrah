@@ -1,73 +1,78 @@
-/* ============================================
-   Linky - Gestión de Temas
-   ES Module Version
-   ============================================ */
+/**
+ * Sistema de 5 temas · Sifrah.
+ *
+ * Aplica `data-theme="..."` al `<html>`, persiste en localStorage y
+ * sincroniza el highlight del item activo en el menú dropdown.
+ */
 
-import { toast } from './utils.js';
+import { $, toast } from './utils.js';
+import { STORAGE_KEYS } from './constants.js';
 
-/* --- Cargar Tema Guardado --- */
+const VALID_THEMES = ['dark', 'light', 'ocean', 'forest', 'pink'];
+let current = 'dark';
+
+/** Carga el tema guardado y lo aplica al documento. */
 export function loadTheme() {
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-  updateThemeIcon(savedTheme);
-  updateActiveTheme(savedTheme);
-}
-
-/* --- Toggle Theme Menu --- */
-export function toggleThemeMenu() {
-  const menu = document.getElementById('themeMenu');
-  menu.classList.toggle('hidden');
-}
-
-/* --- Cambiar Tema --- */
-export function changeTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  updateThemeIcon(theme);
-  updateActiveTheme(theme);
-
-  const themeNames = {
-    dark: 'Modo oscuro',
-    light: 'Modo claro',
-    ocean: 'Ocean Blue',
-    forest: 'Forest Green',
-    pink: 'Pink'
-  };
-
-  toast(themeNames[theme] + ' activado');
-  document.getElementById('themeMenu').classList.add('hidden');
-}
-
-/* --- Actualizar Icono del Botón --- */
-function updateThemeIcon(theme) {
-  const icons = {
-    dark: 'moon',
-    light: 'sun',
-    ocean: 'waves',
-    forest: 'leaf',
-    pink: 'heart'
-  };
-  const btn = document.getElementById('themeToggle');
-  if (btn) {
-    btn.innerHTML = `<i data-lucide="${icons[theme] || 'palette'}" class="icon"></i><span>Temas</span>`;
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+  let saved = 'dark';
+  try {
+    saved = localStorage.getItem(STORAGE_KEYS.theme) || 'dark';
+  } catch {
+    /* localStorage inaccesible */
   }
+  if (!VALID_THEMES.includes(saved)) saved = 'dark';
+  current = saved;
+  document.documentElement.setAttribute('data-theme', saved);
+  updateThemeMenu();
 }
 
-/* --- Marcar Tema Activo --- */
-function updateActiveTheme(theme) {
-  document.querySelectorAll('.theme-option').forEach(opt => {
-    opt.classList.toggle('active', opt.dataset.theme === theme);
+/** Cambia el tema activo, persiste y cierra el menu. */
+export function changeTheme(theme) {
+  if (!VALID_THEMES.includes(theme)) return;
+  current = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  try {
+    localStorage.setItem(STORAGE_KEYS.theme, theme);
+  } catch {
+    /* quota */
+  }
+  updateThemeMenu();
+  const menu = $('themeMenu');
+  if (menu) menu.classList.add('hidden');
+  toast(`Tema: ${theme}`);
+}
+
+/** Marca con `.active` el item del tema actual. */
+function updateThemeMenu() {
+  document.querySelectorAll('.theme-option').forEach((b) => {
+    b.classList.toggle('active', b.dataset.theme === current);
   });
 }
 
-/* --- Setup: Cerrar Menú al Hacer Click Fuera --- */
+/** Toggle del dropdown de selección de tema. */
+export function toggleThemeMenu() {
+  const menu = $('themeMenu');
+  if (!menu) return;
+  menu.classList.toggle('hidden');
+}
+
+/** Conecta los listeners: toggle del menu, cambio de tema, click fuera para cerrar. */
 export function setupThemeListeners() {
-  document.addEventListener('click', (e) => {
-    const menu = document.getElementById('themeMenu');
-    const toggle = document.getElementById('themeToggle');
-    if (menu && toggle && !menu.contains(e.target) && !toggle.contains(e.target)) {
-      menu.classList.add('hidden');
+  document.body.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-action]');
+    if (target && target.dataset.action === 'toggle-theme-menu') {
+      toggleThemeMenu();
+      return;
+    }
+    if (target && target.dataset.action === 'set-theme' && target.dataset.theme) {
+      changeTheme(target.dataset.theme);
+      return;
+    }
+    // Click fuera del toggle/menu → cerrar el dropdown
+    const menu = $('themeMenu');
+    if (menu && !menu.classList.contains('hidden')) {
+      if (!e.target.closest('.theme-toggle')) {
+        menu.classList.add('hidden');
+      }
     }
   });
 }

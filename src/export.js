@@ -1,172 +1,100 @@
-/* ============================================
-   Linky - Exportación (CSV y Excel)
-   ES Module Version
-   ============================================ */
+/**
+ * Exportación del historial · Sifrah.
+ *
+ * - CSV: nativo, BOM UTF-8, headers en inglés (compatible con import GA4 / sheets).
+ * - Excel: SheetJS via dynamic import (CDN). Headers en español, una sola hoja.
+ */
 
-import { utmHistory } from './constants.js';
 import { toast } from './utils.js';
+import { getHistory } from './history.js';
 
-/* --- Exportar a CSV --- */
-export function exportCSV() {
-  if (!utmHistory.length) return toast('Sin datos para exportar');
+const CSV_HEADERS = [
+  'createdAt', 'division', 'plataforma', 'medium', 'objetivo', 'audiencia',
+  'formato', 'tema', 'mes', 'ano', 'version',
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_content',
+  'urlDestino', 'urlCompleta', 'urlStatus',
+];
 
-  const h = ['division', 'plataforma', 'medium', 'objetivo', 'tipoCampana', 'mes', 'ano', 'placement', 'codigoPieza', 'numeroPieza', 'motivo', 'urlDestino', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'urlCompleta', 'createdAt'];
+const EXCEL_HEADERS = [
+  'Fecha', 'División', 'Plataforma', 'Medium', 'Objetivo', 'Audiencia',
+  'Formato', 'Tema', 'Mes', 'Año', 'Versión',
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_content',
+  'URL destino', 'URL etiquetada', 'Status',
+];
 
-  const rows = utmHistory.map(u =>
-    h.map(k => `"${(u[k] || '').replace(/"/g, '""')}"`).join(',')
-  );
-
-  const csv = [h.join(','), ...rows].join('\n');
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'utm_history.csv';
-  a.click();
-
-  toast('CSV descargado');
+function downloadFilename(ext) {
+  return `utm_sifrah_${new Date().toISOString().split('T')[0]}.${ext}`;
 }
 
-/* --- Exportar a Excel --- */
+/** Exporta historial completo a CSV con BOM UTF-8 (compatible con Excel). */
+export function exportCSV() {
+  const history = getHistory();
+  if (!history.length) {
+    toast('Sin UTMs para exportar', 'warning');
+    return;
+  }
+
+  const rows = history.map((u) => CSV_HEADERS.map((k) => {
+    let v = u[k];
+    if (k === 'urlStatus') v = u.urlStatus ? u.urlStatus.status : '';
+    return `"${String(v ?? '').replace(/"/g, '""')}"`;
+  }).join(','));
+
+  const csv = [CSV_HEADERS.join(','), ...rows].join('\n');
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = downloadFilename('csv');
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+  toast('CSV descargado', 'success');
+}
+
+/** Exporta historial completo a Excel via SheetJS (dynamic import desde CDN). */
 export async function exportExcel() {
-  if (!utmHistory.length) return toast('Sin datos para exportar');
+  const history = getHistory();
+  if (!history.length) {
+    toast('Sin UTMs para exportar', 'warning');
+    return;
+  }
 
   try {
-    // Importar SheetJS
-    const XLSX = await import('https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs');
+    toast('Cargando Excel...');
+    const XLSX = await import(/* @vite-ignore */ 'https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs');
 
-    // Headers en español
-    const headers = [
-      'División',
-      'Plataforma',
-      'Medium',
-      'Objetivo',
-      'Tipo Campaña',
-      'Mes',
-      'Año',
-      'Placement',
-      'Código Pieza',
-      'Número Pieza',
-      'Motivo',
-      'URL Destino',
-      'UTM Source',
-      'UTM Medium',
-      'UTM Campaign',
-      'UTM Content',
-      'URL Completa',
-      'Fecha Creación'
-    ];
-
-    // Mapear los datos
-    const data = utmHistory.map(u => [
-      u.division || '',
-      u.plataforma || '',
-      u.medium || '',
-      u.objetivo || '',
-      u.tipoCampana || '',
-      u.mes || '',
-      u.ano || '',
-      u.placement || '',
-      u.codigoPieza || '',
-      u.numeroPieza || '',
-      u.motivo || '',
-      u.urlDestino || '',
-      u.utm_source || '',
-      u.utm_medium || '',
-      u.utm_campaign || '',
-      u.utm_content || '',
-      u.urlCompleta || '',
-      u.createdAt ? new Date(u.createdAt).toLocaleString('es-PE') : ''
+    const rows = history.map((u) => [
+      new Date(u.createdAt).toLocaleString('es-PE'),
+      u.division, u.plataforma, u.medium, u.objetivo, u.audiencia || '',
+      u.formato, u.tema, u.mes, u.ano, u.version || '',
+      u.utm_source, u.utm_medium, u.utm_campaign, u.utm_content,
+      u.urlDestino, u.urlCompleta, u.urlStatus ? u.urlStatus.status : '',
     ]);
 
-    // Crear workbook y worksheet
-    const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
+    const ws = XLSX.utils.aoa_to_sheet([EXCEL_HEADERS, ...rows]);
+    ws['!cols'] = EXCEL_HEADERS.map(() => ({ wch: 18 }));
+
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Historial UTMs');
+    XLSX.utils.book_append_sheet(wb, ws, 'UTMs Sifrah');
+    XLSX.writeFile(wb, downloadFilename('xlsx'));
 
-    // Anchos de columna optimizados
-    const colWidths = [
-      { wch: 12 },  // División
-      { wch: 14 },  // Plataforma
-      { wch: 14 },  // Medium
-      { wch: 14 },  // Objetivo
-      { wch: 16 },  // Tipo Campaña
-      { wch: 12 },  // Mes
-      { wch: 8 },   // Año
-      { wch: 12 },  // Placement
-      { wch: 14 },  // Código Pieza
-      { wch: 14 },  // Número Pieza
-      { wch: 20 },  // Motivo
-      { wch: 35 },  // URL Destino
-      { wch: 12 },  // UTM Source
-      { wch: 14 },  // UTM Medium
-      { wch: 40 },  // UTM Campaign
-      { wch: 45 },  // UTM Content
-      { wch: 60 },  // URL Completa
-      { wch: 20 }   // Fecha Creación
-    ];
-    ws['!cols'] = colWidths;
-
-    // Aplicar estilos a las celdas del header
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-      const cellAddress = XLSX.utils.encode_cell({ r: 0, c: C });
-      if (!ws[cellAddress]) continue;
-
-      if (!ws[cellAddress].s) ws[cellAddress].s = {};
-      ws[cellAddress].s = {
-        fill: {
-          patternType: "solid",
-          fgColor: { rgb: "6366F1" }
-        },
-        font: {
-          name: "Arial",
-          sz: 11,
-          bold: true,
-          color: { rgb: "FFFFFF" }
-        },
-        alignment: {
-          horizontal: "center",
-          vertical: "center"
-        }
-      };
-    }
-
-    // Aplicar estilos zebra striping
-    for (let R = range.s.r + 1; R <= range.e.r; ++R) {
-      const isEven = (R - 1) % 2 === 0;
-      for (let C = range.s.c; C <= range.e.c; ++C) {
-        const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
-        if (!ws[cellAddress]) continue;
-
-        if (!ws[cellAddress].s) ws[cellAddress].s = {};
-        ws[cellAddress].s = {
-          fill: {
-            patternType: "solid",
-            fgColor: { rgb: isEven ? "F8FAFC" : "FFFFFF" }
-          },
-          font: {
-            name: "Arial",
-            sz: 10,
-            color: { rgb: "1E293B" }
-          },
-          alignment: {
-            vertical: "center"
-          }
-        };
-      }
-    }
-
-    // Generar archivo
-    const timestamp = new Date().toISOString().slice(0, 10);
-    XLSX.writeFile(wb, `utm_history_${timestamp}.xlsx`, {
-      bookType: 'xlsx',
-      cellStyles: true,
-      type: 'binary'
-    });
-
-    toast('Excel descargado con formato');
-  } catch (error) {
-    console.error('Error exportando Excel:', error);
-    toast('Error al exportar Excel. Intenta con CSV.');
+    toast('Excel descargado', 'success');
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('Error exportando Excel:', err);
+    toast('Error al exportar Excel · usa CSV', 'error');
   }
+}
+
+/** Conecta los botones export-csv / export-excel via data-action. */
+export function setupExportListeners() {
+  document.body.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+    const action = target.dataset.action;
+    if (action === 'export-csv') exportCSV();
+    else if (action === 'export-excel') exportExcel();
+  });
 }

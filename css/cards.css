@@ -70,7 +70,7 @@
 
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-md);
   margin-bottom: var(--space-lg);
 }
@@ -122,21 +122,27 @@
   left: 100%;
 }
 
-/* --- Stat Card Variantes (Colores Sólidos) --- */
-.stat-card:nth-child(1) {
+/* --- Stat Card Variantes (Colores Sólidos · Sifrah: 4 divisiones) --- */
+.stat-card.stat-total {
   background: var(--accent);
   color: var(--text-contrast);
 }
 
-.stat-card:nth-child(2) {
+.stat-card.stat-branding {
   background: var(--accent-secondary);
   color: var(--color-white);
 }
 
-.stat-card:nth-child(3) {
+.stat-card.stat-retail {
+  background: var(--color-warning);
+  color: var(--color-white);
+}
+
+.stat-card.stat-ecom {
   background: var(--color-blue);
   color: var(--color-white);
 }
+
 
 /* --- Stat Number --- */
 .stat-number {
@@ -393,4 +399,38 @@
 
 .card-loading * {
   visibility: hidden;
+}
+
+
+/* --- Stat Grid (4 cards en historial: total, branding, retail, ecom) --- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: var(--space-md);
+}
+@media (max-width: 700px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.stat-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  text-align: center;
+}
+.stat-item .stat-num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+.stat-item .stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+  font-weight: 600;
 }

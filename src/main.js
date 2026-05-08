@@ -1,128 +1,137 @@
-/* ============================================
-   Linky - Punto de Entrada Principal
-   ES Module Version
+/**
+ * Linky · Sifrah · Entry point.
+ *
+ * Wire-up de toda la app: config + historial + theme + modales + form + UX.
+ * Tras DOMContentLoaded la app está 100% funcional.
+ */
 
-   Este archivo:
-   1. Importa todos los módulos
-   2. Expone funciones necesarias al objeto window (para onclick en HTML)
-   3. Inicializa la aplicación
-   ============================================ */
+import { loadConfig } from './config.js';
+import {
+  loadHistory,
+  renderHistory,
+  updateStats,
+  addToHistory,
+  setupHistoryListeners,
+  copyFromHistory,
+  getHistory,
+} from './history.js';
+import {
+  setupFormListeners,
+  populateURLsSelect,
+  populateAudienciasSelect,
+  populateFormatList,
+  populateYearSelect,
+  populateMonthDefault,
+  setupDraftPersistence,
+  restoreDraft,
+} from './form.js';
+import { loadTheme, setupThemeListeners } from './theme.js';
+import { setupModalListeners } from './modals.js';
+import { setupExportListeners } from './export.js';
+import { renderAllConfigLists, setupConfigUIListeners } from './config-ui.js';
+import { isConfirmOpen, $, toast } from './utils.js';
+import { VERSION_TAG } from './constants.js';
 
-// --- Importar módulos ---
-import { initConfig, openConfigModal, closeConfigModal, switchConfigTab,
-         showAddUrlForm, cancelAddUrl, saveNewUrl, deleteUrl,
-         showAddCampanaForm, cancelAddCampana, saveNewCampana, deleteCampana, updateCampanaPreview,
-         showAddMotivoForm, cancelAddMotivo, saveNewMotivo, deleteMotivo, updateMotivoPreview,
-         showAddCodigoForm, cancelAddCodigo, saveNewCodigo, deleteCodigo, updateCodigoPreview,
-         restoreDefaults } from './config.js';
-
-import { loadTheme, toggleThemeMenu, changeTheme, setupThemeListeners } from './theme.js';
-
-import { setupListeners, resetForm, populateNumeroPieza, populateYears,
-         setCurrentMonth, setGenerateUTMHandler } from './form.js';
-
-import { generateUTM, copyResult } from './utm.js';
-
-import { renderHistory, updateStats, copyFromHistory, deleteFromHistory, clearHistory } from './history.js';
-
-import { exportCSV, exportExcel } from './export.js';
-
-import { openHelp, closeHelp } from './modals.js';
-
-// --- Exponer funciones al objeto window para onclick handlers en HTML ---
-// Config Modal
-window.openConfigModal = openConfigModal;
-window.closeConfigModal = closeConfigModal;
-window.switchConfigTab = switchConfigTab;
-window.restoreDefaults = restoreDefaults;
-
-// URLs Config
-window.showAddUrlForm = showAddUrlForm;
-window.cancelAddUrl = cancelAddUrl;
-window.saveNewUrl = saveNewUrl;
-window.deleteUrl = deleteUrl;
-
-// Campañas Config
-window.showAddCampanaForm = showAddCampanaForm;
-window.cancelAddCampana = cancelAddCampana;
-window.saveNewCampana = saveNewCampana;
-window.deleteCampana = deleteCampana;
-
-// Motivos Config
-window.showAddMotivoForm = showAddMotivoForm;
-window.cancelAddMotivo = cancelAddMotivo;
-window.saveNewMotivo = saveNewMotivo;
-window.deleteMotivo = deleteMotivo;
-
-// Códigos Config
-window.showAddCodigoForm = showAddCodigoForm;
-window.cancelAddCodigo = cancelAddCodigo;
-window.saveNewCodigo = saveNewCodigo;
-window.deleteCodigo = deleteCodigo;
-
-// Theme
-window.toggleThemeMenu = toggleThemeMenu;
-window.changeTheme = changeTheme;
-
-// Form
-window.resetForm = resetForm;
-window.copyResult = copyResult;
-
-// History
-window.copyFromHistory = copyFromHistory;
-window.deleteFromHistory = deleteFromHistory;
-window.clearHistory = clearHistory;
-
-// Export
-window.exportCSV = exportCSV;
-window.exportExcel = exportExcel;
-
-// Help Modal
-window.openHelp = openHelp;
-window.closeHelp = closeHelp;
-
-// --- Setup Preview Listeners for Config ---
-function setupPreviewListeners() {
-  const campanaInput = document.getElementById('campanaName');
-  if (campanaInput) {
-    campanaInput.addEventListener('input', updateCampanaPreview);
-  }
-
-  const motivoInput = document.getElementById('motivoName');
-  if (motivoInput) {
-    motivoInput.addEventListener('input', updateMotivoPreview);
-  }
-
-  const codigoInput = document.getElementById('codigoName');
-  if (codigoInput) {
-    codigoInput.addEventListener('input', updateCodigoPreview);
-  }
-}
-
-// --- Inicialización ---
 document.addEventListener('DOMContentLoaded', () => {
-  // Establecer el handler de generateUTM en form.js
-  setGenerateUTMHandler(generateUTM);
+  // 1. Estado: config + historial + tema (no toca DOM aún)
+  loadConfig();
+  loadHistory();
 
-  // Inicializar configuración
-  initConfig();
+  // 2. Pobla selects/datalists (depende de config)
+  populateURLsSelect();
+  populateAudienciasSelect();
+  populateFormatList();
+  populateYearSelect();
+  populateMonthDefault();
 
-  // Poblar selectores
-  populateNumeroPieza();
-  populateYears();
-  setCurrentMonth();
-
-  // Setup listeners
-  setupListeners();
+  // 3. Wire-up listeners. Cada módulo registra sus propios data-actions.
+  setupFormListeners(addToHistory);
+  setupHistoryListeners();
+  setupExportListeners();
   setupThemeListeners();
-  setupPreviewListeners();
+  setupModalListeners(renderAllConfigLists);
+  setupConfigUIListeners();
 
-  // Renderizar datos
+  // 4. UX Fase 5: borrador auto-save + atajos de teclado
+  setupDraftPersistence();
+  setupKeyboardShortcuts();
+
+  // 5. Aplica tema persistido y renderiza estado inicial
+  loadTheme();
   renderHistory();
   updateStats();
 
-  // Cargar tema
-  loadTheme();
+  // 6. Restaura borrador si existe (después de wire-up para que los change handlers funcionen)
+  const restored = restoreDraft();
+  if (restored) {
+    toast('Borrador restaurado', 'success');
+  }
 
-  console.log('Linky inicializado correctamente');
+  // 7. Iconos Lucide
+  if (typeof window !== 'undefined' && typeof window.lucide !== 'undefined') {
+    window.lucide.createIcons();
+  }
+
+  // eslint-disable-next-line no-console
+  console.log(`Linky Sifrah inicializado · ${VERSION_TAG}`);
 });
+
+/* ============================================
+   Atajos de teclado (UX Fase 5)
+   ============================================ */
+
+/**
+ * Cmd/Ctrl+Enter   → submit del form (genera UTM)
+ * Cmd/Ctrl+K       → foco al primer campo vacío del form
+ * Cmd/Ctrl+Shift+C → copia el último resultado generado al clipboard
+ *
+ * Los atajos se ignoran cuando hay un modal de confirmación abierto.
+ */
+function setupKeyboardShortcuts() {
+  document.addEventListener('keydown', (e) => {
+    if (isConfirmOpen()) return;
+
+    const meta = e.metaKey || e.ctrlKey;
+    if (!meta) return;
+
+    // Cmd/Ctrl+Enter → submit
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const form = $('utmForm');
+      if (form && typeof form.requestSubmit === 'function') {
+        form.requestSubmit();
+      } else if (form) {
+        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      }
+      return;
+    }
+
+    // Cmd/Ctrl+K → primer campo vacío del form
+    if (e.key.toLowerCase() === 'k' && !e.shiftKey) {
+      e.preventDefault();
+      const ids = ['urlDestino', 'division', 'plataforma', 'objetivo', 'audiencia', 'formato', 'tema', 'mes', 'ano'];
+      for (const id of ids) {
+        const el = $(id);
+        if (!el) continue;
+        if (id === 'audiencia' && $('audienciaGroup')?.classList.contains('hidden')) continue;
+        if (!el.value) { el.focus(); return; }
+      }
+      // Si todos están llenos, foco en el primero (urlDestino)
+      const first = $('urlDestino');
+      if (first) first.focus();
+      return;
+    }
+
+    // Cmd/Ctrl+Shift+C → copiar último UTM generado
+    if (e.key.toLowerCase() === 'c' && e.shiftKey) {
+      const list = getHistory();
+      const last = list[0];
+      if (!last) {
+        toast('Aún no has generado ninguna UTM', 'warning');
+        return;
+      }
+      e.preventDefault();
+      copyFromHistory(last.id);
+    }
+  });
+}

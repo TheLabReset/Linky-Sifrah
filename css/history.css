@@ -59,6 +59,10 @@
   border-left: 4px solid var(--color-danger);
 }
 
+.utm-item.url-unknown {
+  border-left-color: var(--muted);
+}
+
 /* --- UTM Header --- */
 .utm-header {
   display: flex;
@@ -116,6 +120,12 @@
   background: rgba(255, 68, 68, 0.1);
   color: var(--color-danger);
   border: 1px solid var(--color-danger);
+}
+
+.url-status-badge.unknown {
+  background: rgba(170, 170, 170, 0.15);
+  color: var(--muted);
+  border: 1px solid var(--muted);
 }
 
 /* --- UTM Actions --- */
@@ -353,4 +363,107 @@
     transparent
   );
   animation: shimmer 1.5s infinite;
+}
+
+/* --- Empty State (cuando no hay UTMs en historial) --- */
+.empty-state {
+  text-align: center;
+  padding: var(--space-xl) var(--space-md);
+  color: var(--muted);
+}
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  opacity: 0.4;
+  margin-bottom: 12px;
+}
+.empty-state h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+}
+.empty-state p { font-size: 13px; }
+
+/* --- UTM List Scrollbar (Webkit) --- */
+.utm-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+.utm-list::-webkit-scrollbar { width: 6px; }
+.utm-list::-webkit-scrollbar-track { background: var(--bg); }
+.utm-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.utm-list::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ============================================
+   History Toolbar · search + filter chips (Fase 5)
+   ============================================ */
+
+.history-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  align-items: center;
+}
+
+.history-search {
+  position: relative;
+  flex: 1 1 240px;
+  display: flex;
+  align-items: center;
+}
+.history-search > .icon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  pointer-events: none;
+}
+.history-search input {
+  width: 100%;
+  padding: 10px 14px 10px 36px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.history-search input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow-color);
+}
+
+.history-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  letter-spacing: 0.03em;
+  font-family: var(--font-body);
+}
+.filter-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.filter-chip.active {
+  background: var(--accent);
+  color: var(--text-contrast);
+  border-color: var(--accent);
 }
