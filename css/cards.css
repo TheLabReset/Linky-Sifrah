@@ -394,3 +394,10 @@
 .card-loading * {
   visibility: hidden;
 }
+
+/* --- Brand Title (header h1 + BETA badge alineados) --- */
+.brand-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
