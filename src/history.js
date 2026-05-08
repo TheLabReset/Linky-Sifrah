@@ -19,6 +19,12 @@ import { checkURL } from './validation.js';
 /** @type {object[]} */
 let history = [];
 
+/** Estado del filtro/búsqueda del historial (Fase 5 UX). */
+const historyFilter = {
+  q: '',
+  division: 'all',
+};
+
 /** Carga desde localStorage. Idempotente, soporta reinicio. */
 export function loadHistory() {
   try {
@@ -87,17 +93,49 @@ function buildBadgeHTML(entry) {
   return '';
 }
 
+/** Aplica filtro+búsqueda al array history. Devuelve subset (no muta). */
+function applyFilter(list) {
+  const q = historyFilter.q.trim().toLowerCase();
+  const div = historyFilter.division;
+
+  return list.filter((u) => {
+    if (div !== 'all' && u.division !== div) return false;
+    if (!q) return true;
+    const haystack = [
+      u.utm_campaign, u.utm_content, u.tema, u.urlCompleta,
+      u.formato, u.audiencia, u.objetivo,
+    ].map((v) => String(v ?? '').toLowerCase()).join(' ');
+    return haystack.includes(q);
+  });
+}
+
 /** Pinta el listado completo. Bug 4 (empty state) + Bug 5 (escapeHTML). */
 export function renderHistory() {
   const container = $('utmList');
   if (!container) return;
 
+  // Empty state cuando no hay nada en absoluto
   if (history.length === 0) {
     container.innerHTML = `
       <div class="empty-state">
         <i data-lucide="inbox" class="icon-lg" style="width:48px;height:48px;"></i>
         <h3>Sin UTMs aún</h3>
-        <p>Crea tu primera UTM con el formulario de la izquierda.</p>
+        <p>Crea tu primera UTM con el formulario de arriba.</p>
+      </div>`;
+    refreshIcons();
+    return;
+  }
+
+  // Aplicar filtro/búsqueda
+  const filtered = applyFilter(history);
+
+  // Empty state filtrado: hay UTMs pero ninguna calza con el filtro
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <i data-lucide="search-x" class="icon-lg" style="width:48px;height:48px;"></i>
+        <h3>Sin coincidencias</h3>
+        <p>Ningún UTM calza con el filtro o la búsqueda actual.</p>
       </div>`;
     refreshIcons();
     return;
@@ -106,7 +144,7 @@ export function renderHistory() {
   // Construyo HTML como string. Cualquier valor de usuario pasa por
   // escapeHTML antes de interpolarse. Uso `data-id` (no `data-idx`) para
   // que clicks tardíos sigan funcionando aunque el array se haya reordenado.
-  const html = history.map((u) => {
+  const html = filtered.map((u) => {
     const badge = buildBadgeHTML(u);
     const status = u.urlStatus && u.urlStatus.status ? `url-${u.urlStatus.status}` : '';
     const date = new Date(u.createdAt).toLocaleString('es-PE');
@@ -197,6 +235,31 @@ export async function clearHistory() {
    Wiring
    ============================================ */
 
+/* ============================================
+   Filter + search (UX Fase 5)
+   ============================================ */
+
+const SEARCH_DEBOUNCE_MS = 150;
+let searchTimer = null;
+
+/** Setea el chip de división activo y re-renderiza. */
+function setFilterDivision(div) {
+  historyFilter.division = div;
+  document.querySelectorAll('#historyFilters .filter-chip').forEach((b) => {
+    b.classList.toggle('active', b.dataset.filter === div);
+  });
+  renderHistory();
+}
+
+/** Setea la query de búsqueda con debounce y re-renderiza. */
+function setFilterQuery(q) {
+  if (searchTimer) clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    historyFilter.q = q;
+    renderHistory();
+  }, SEARCH_DEBOUNCE_MS);
+}
+
 /** Conecta el delegado de clicks para los botones del historial y "Limpiar". */
 export function setupHistoryListeners() {
   document.body.addEventListener('click', (e) => {
@@ -210,6 +273,15 @@ export function setupHistoryListeners() {
       if (target.dataset.id) deleteFromHistory(target.dataset.id);
     } else if (action === 'clear-history') {
       clearHistory();
+    } else if (action === 'set-filter') {
+      const div = target.dataset.filter || 'all';
+      setFilterDivision(div);
     }
   });
+
+  // Search input (debounced)
+  const searchEl = $('historySearch');
+  if (searchEl) {
+    searchEl.addEventListener('input', (e) => setFilterQuery(e.target.value));
+  }
 }

@@ -539,3 +539,22 @@
   font-weight: 700;
   letter-spacing: 0.05em;
 }
+
+/* --- Config Form Hint (microcopy debajo del label) --- */
+.config-form-hint {
+  font-weight: 400;
+  color: #888;
+  font-size: 11px;
+  margin-left: 4px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* --- Preview Slot (placeholder visual del valor que se está editando) --- */
+.preview-slot {
+  background: rgba(0, 153, 107, 0.18);
+  color: #00996B;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+}

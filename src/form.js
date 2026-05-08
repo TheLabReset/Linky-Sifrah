@@ -17,7 +17,7 @@
 
 import { $, toast } from './utils.js';
 import { cleanInputLive } from './sanitize.js';
-import { DIVISION_MEDIUM_MAP } from './constants.js';
+import { DIVISION_MEDIUM_MAP, STORAGE_KEYS } from './constants.js';
 import { getConfig } from './config.js';
 import { generateUTM, copyResult, resetForm } from './utm.js';
 
@@ -257,6 +257,9 @@ export function setupFormListeners(onGenerate) {
 
       toast('UTM generada', 'success');
 
+      // Borrar el draft: el usuario terminó este flujo y empieza fresco
+      clearDraft();
+
       if (typeof onGenerate === 'function') {
         onGenerate(entry, fullUrl);
       }
@@ -271,4 +274,146 @@ export function setupFormListeners(onGenerate) {
     if (action === 'reset-form') resetForm();
     else if (action === 'copy-result') copyResult();
   });
+}
+
+/* ============================================
+   Draft auto-save (UX Fase 5)
+   ============================================ */
+
+const DRAFT_DEBOUNCE_MS = 400;
+let draftTimer = null;
+
+/** Guarda el borrador del form en localStorage con debounce. */
+function persistDraft() {
+  if (draftTimer) clearTimeout(draftTimer);
+  draftTimer = setTimeout(() => {
+    try {
+      const data = readForm();
+      // Solo persistimos si hay al menos UN campo significativo lleno;
+      // un draft vacío no aporta y pisaría un draft anterior si el usuario
+      // borra todo en bloque (mejor que se conserve hasta que reset/submit).
+      const hasContent = Object.values(data).some((v) => String(v ?? '').trim() !== '');
+      if (!hasContent) return;
+      localStorage.setItem(STORAGE_KEYS.draft, JSON.stringify(data));
+    } catch {
+      /* quota o storage inaccesible — silencioso */
+    }
+  }, DRAFT_DEBOUNCE_MS);
+}
+
+/** Borra el borrador (al submit exitoso o reset explícito). */
+export function clearDraft() {
+  if (draftTimer) {
+    clearTimeout(draftTimer);
+    draftTimer = null;
+  }
+  try {
+    localStorage.removeItem(STORAGE_KEYS.draft);
+  } catch {
+    /* silencioso */
+  }
+}
+
+/**
+ * Restaura un borrador guardado al cargar la app. Pobla los campos y dispara
+ * los `change` necesarios para reconstruir custom inputs y audiencia condicional.
+ * @returns {boolean} true si se restauró algo
+ */
+export function restoreDraft() {
+  let data = null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.draft);
+    if (!raw) return false;
+    data = JSON.parse(raw);
+  } catch {
+    return false;
+  }
+  if (!data || typeof data !== 'object') return false;
+
+  // Setear los selects/inputs en orden lógico
+  const setVal = (id, v) => {
+    const el = $(id);
+    if (el && v != null && v !== '') el.value = v;
+  };
+
+  // URL: si era custom, el value se serializó como la URL real (no 'custom').
+  // Comparamos contra las options actuales del select para detectar si la
+  // value persistida ya no existe en el catálogo (entonces caemos en custom).
+  const urlSel = $('urlDestino');
+  if (urlSel && data.url) {
+    const optionExists = Array.from(urlSel.options).some((o) => o.value === data.url);
+    if (optionExists) {
+      urlSel.value = data.url;
+    } else {
+      urlSel.value = 'custom';
+      const customEl = $('urlCustom');
+      if (customEl) {
+        customEl.value = data.url;
+        customEl.classList.remove('hidden');
+      }
+    }
+    urlSel.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  setVal('division', data.division);
+  if (data.division) {
+    const divEl = $('division');
+    if (divEl) divEl.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  // Plataforma: detectar si es custom
+  const plataformaSel = $('plataforma');
+  if (plataformaSel && data.plataforma) {
+    const optExists = Array.from(plataformaSel.options).some((o) => o.value === data.plataforma);
+    if (optExists) {
+      plataformaSel.value = data.plataforma;
+    } else {
+      plataformaSel.value = 'custom';
+      const customEl = $('plataformaCustom');
+      if (customEl) {
+        customEl.value = data.plataforma;
+        customEl.classList.remove('hidden');
+      }
+    }
+    plataformaSel.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  setVal('objetivo', data.objetivo);
+
+  // Audiencia (solo si la división es ecom y el group quedó visible)
+  if (data.division === 'ecom' && data.audiencia) {
+    const audSel = $('audiencia');
+    if (audSel) {
+      const optExists = Array.from(audSel.options).some((o) => o.value === data.audiencia);
+      if (optExists) {
+        audSel.value = data.audiencia;
+      } else {
+        audSel.value = 'custom';
+        const customEl = $('audienciaCustom');
+        if (customEl) {
+          customEl.value = data.audiencia;
+          customEl.classList.remove('hidden');
+        }
+      }
+      audSel.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  setVal('formato', data.formato);
+  setVal('tema', data.tema);
+  setVal('mes', data.mes);
+  setVal('ano', data.ano);
+  setVal('version', data.version);
+
+  return true;
+}
+
+/** Conecta el auto-save: input/change en cualquier campo del form lo persiste. */
+export function setupDraftPersistence() {
+  const form = $('utmForm');
+  if (!form) return;
+
+  // Wire-up cuando hay cambios reales en el form.
+  form.addEventListener('input', persistDraft);
+  form.addEventListener('change', persistDraft);
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Linky · RESET 2026 Sifrah</title>
 <link rel="icon" type="image/png" href="./linky-logo.png">
 
@@ -11,13 +11,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<!-- CSS modules (orden importa: tokens → temas → layout → componentes → utils → responsive) -->
+<!-- CSS modules (orden: tokens → temas → layout → componentes → utils → responsive) -->
 <link rel="stylesheet" href="./css/variables.css">
 <link rel="stylesheet" href="./css/themes.css">
 <link rel="stylesheet" href="./css/layout.css">
-<link rel="stylesheet" href="./css/cards.css">
-<link rel="stylesheet" href="./css/forms.css">
 <link rel="stylesheet" href="./css/navigation.css">
+<link rel="stylesheet" href="./css/forms.css">
+<link rel="stylesheet" href="./css/cards.css">
 <link rel="stylesheet" href="./css/history.css">
 <link rel="stylesheet" href="./css/modals.css">
 <link rel="stylesheet" href="./css/config.css">
@@ -30,316 +30,727 @@
 
 <body>
 
+<!-- ============================================
+     SECCIÓN 1 · CONTAINER + HEADER
+     ============================================ -->
 <div class="container">
 
+  <div class="header">
+    <h1>Linky</h1>
+    <p>RESET — Sifrah</p>
+  </div>
+
   <!-- ============================================
-       HEADER · brand + nav
+       SECCIÓN 2 · TOP NAV (Ajustes + Tema)
        ============================================ -->
-  <header class="header">
-    <div class="header-top">
-      <div class="brand">
-        <div class="brand-title">
-          <h1>LINKY</h1>
-          <span class="beta-badge">BETA</span>
+  <nav class="top-nav">
+    <button class="config-btn" id="openConfigBtn" data-action="open-config" title="Configuración">
+      <i data-lucide="settings" class="icon"></i>
+      <span>Ajustes</span>
+    </button>
+
+    <div style="position: relative;">
+      <button class="theme-toggle" id="themeToggleBtn" data-action="toggle-theme-menu" title="Cambiar tema">
+        <i data-lucide="palette" class="icon"></i>
+        <span>Temas</span>
+      </button>
+      <div id="themeMenu" class="theme-menu hidden">
+        <div class="theme-option" data-action="set-theme" data-theme="dark">
+          <i data-lucide="moon" class="icon"></i> <span class="theme-text">Oscuro</span>
         </div>
-        <p>RESET — <strong>Sifrah</strong></p>
+        <div class="theme-option" data-action="set-theme" data-theme="light">
+          <i data-lucide="sun" class="icon"></i> <span class="theme-text">Claro</span>
+        </div>
+        <div class="theme-option" data-action="set-theme" data-theme="ocean">
+          <i data-lucide="waves" class="icon"></i> <span class="theme-text">Ocean Blue</span>
+        </div>
+        <div class="theme-option" data-action="set-theme" data-theme="forest">
+          <i data-lucide="leaf" class="icon"></i> <span class="theme-text">Forest Green</span>
+        </div>
+        <div class="theme-option" data-action="set-theme" data-theme="pink">
+          <i data-lucide="heart" class="icon"></i> <span class="theme-text">Pink</span>
+        </div>
       </div>
-
-      <nav class="top-nav">
-        <button class="nav-btn" id="openConfigBtn" data-action="open-config" title="Ajustes">
-          <i data-lucide="settings" class="icon"></i>
-          <span>Ajustes</span>
-        </button>
-
-        <div class="theme-toggle">
-          <button class="nav-btn" id="themeToggleBtn" data-action="toggle-theme-menu" title="Cambiar tema">
-            <i data-lucide="palette" class="icon"></i>
-            <span>Tema</span>
-          </button>
-          <div class="theme-menu hidden" id="themeMenu">
-            <button class="theme-option" data-action="set-theme" data-theme="dark"><span class="theme-dot" style="background:#00FF85"></span>Dark</button>
-            <button class="theme-option" data-action="set-theme" data-theme="light"><span class="theme-dot" style="background:#00996B"></span>Light</button>
-            <button class="theme-option" data-action="set-theme" data-theme="ocean"><span class="theme-dot" style="background:#00B4D8"></span>Ocean</button>
-            <button class="theme-option" data-action="set-theme" data-theme="forest"><span class="theme-dot" style="background:#4CAF50"></span>Forest</button>
-            <button class="theme-option" data-action="set-theme" data-theme="pink"><span class="theme-dot" style="background:#D81B60"></span>Pink</button>
-          </div>
-        </div>
-      </nav>
     </div>
-  </header>
+  </nav>
 
   <!-- ============================================
-       LAYOUT · form (left) + history (right)
+       SECCIÓN 3 · FORMULARIO PRINCIPAL
        ============================================ -->
-  <div class="layout">
+  <div class="form-container">
+    <div class="card">
+      <div class="card-title"><i data-lucide="puzzle" class="icon"></i> Crear Nueva UTM</div>
 
-    <!-- ===== Columna izquierda: form + result ===== -->
-    <div class="col-left">
+      <form id="utmForm" autocomplete="off" novalidate>
 
-      <div class="card">
-        <div class="card-title">
-          <i data-lucide="puzzle" class="icon-lg"></i>
-          Crear nueva UTM
+        <!-- URL DE DESTINO -->
+        <div class="form-group full">
+          <label for="urlDestino">URL de Destino <span class="required-star">*</span></label>
+          <select id="urlDestino" required>
+            <option value="">Seleccionar URL...</option>
+          </select>
+          <input id="urlCustom" class="hidden custom-input" type="url" placeholder="https://sifrah.com/..."/>
         </div>
 
-        <div class="info-strip">
-          <i data-lucide="sparkles" class="icon"></i>
-          <span>Linky limpia automáticamente tildes, ñ, espacios y caracteres especiales para que la UTM nunca se rompa.</span>
-        </div>
-
-        <form id="utmForm" autocomplete="off" novalidate>
-
-          <!-- URL DE DESTINO -->
-          <div class="form-group full">
-            <label for="urlDestino">URL de destino <span class="required-star">*</span></label>
-            <select id="urlDestino" required>
-              <option value="">Seleccionar URL...</option>
-            </select>
-            <input id="urlCustom" class="hidden custom-input" type="url" placeholder="https://sifrah.com/...">
-          </div>
-
-          <!-- DIVISIÓN + PLATAFORMA -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="division">División <span class="required-star">*</span></label>
-              <select id="division" required>
-                <option value="">Seleccionar...</option>
-                <option value="branding">Branding</option>
-                <option value="retail">Retail</option>
-                <option value="ecom">Ecommerce</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="plataforma">Plataforma <span class="required-star">*</span></label>
-              <select id="plataforma" required>
-                <option value="">Seleccionar...</option>
-                <option value="facebook">Meta (FB / IG)</option>
-                <option value="google">Google</option>
-                <option value="tiktok">TikTok</option>
-                <option value="youtube">YouTube</option>
-                <option value="custom">+ Personalizada</option>
-              </select>
-              <input id="plataformaCustom" class="hidden custom-input" type="text" placeholder="ej: pinterest, linkedin">
-            </div>
-          </div>
-
-          <!-- MEDIUM (auto) + OBJETIVO -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="medium">Medium <span class="auto-badge">AUTO</span></label>
-              <input id="medium" type="text" readonly placeholder="Se genera según división">
-              <span class="field-hint">Branding y Retail → social-media · Ecom → social-ads</span>
-            </div>
-            <div class="form-group">
-              <label for="objetivo">Objetivo <span class="required-star">*</span></label>
-              <select id="objetivo" required>
-                <option value="">Seleccionar...</option>
-                <option value="alc">Alcance</option>
-                <option value="rpr">Reproducciones</option>
-                <option value="traf">Tráfico</option>
-                <option value="conv">Conversiones</option>
-              </select>
-              <span class="field-hint">En la UTM se abrevia (alc, rpr, traf, conv)</span>
-            </div>
-          </div>
-
-          <!-- AUDIENCIA (condicional · solo Ecom) -->
-          <div id="audienciaGroup" class="form-group hidden conditional-row">
-            <label for="audiencia">Audiencia <span class="required-star">*</span></label>
-            <select id="audiencia">
-              <option value="">Seleccionar...</option>
-            </select>
-            <input id="audienciaCustom" class="hidden custom-input" type="text" placeholder="ej: pmax, sem">
-            <span class="field-hint">Solo aplica a Ecommerce</span>
-          </div>
-
-          <!-- FORMATO + TEMA -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="formato">Formato <span class="required-star">*</span></label>
-              <input id="formato" type="text" list="formatList" placeholder="ej: carrusel, video, reel...">
-              <datalist id="formatList"></datalist>
-              <span class="field-hint">Sugerencias automáticas mientras escribes</span>
-            </div>
-            <div class="form-group">
-              <label for="tema">Tema / Producto <span class="required-star">*</span></label>
-              <input id="tema" type="text" placeholder="ej: nueva colección love boho, bisutería, 30 off">
-              <span class="field-hint">Campo libre · se sanitiza automáticamente</span>
-            </div>
-          </div>
-
-          <!-- MES + AÑO -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="mes">Mes <span class="required-star">*</span></label>
-              <select id="mes" required>
-                <option value="">Seleccionar...</option>
-                <option value="ene">Enero</option>
-                <option value="feb">Febrero</option>
-                <option value="mar">Marzo</option>
-                <option value="abr">Abril</option>
-                <option value="may">Mayo</option>
-                <option value="jun">Junio</option>
-                <option value="jul">Julio</option>
-                <option value="ago">Agosto</option>
-                <option value="set">Setiembre</option>
-                <option value="oct">Octubre</option>
-                <option value="nov">Noviembre</option>
-                <option value="dic">Diciembre</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="ano">Año <span class="required-star">*</span></label>
-              <select id="ano" required></select>
-              <span class="field-hint">Va al utm_content abreviado a 2 dígitos (ej: 26)</span>
-            </div>
-          </div>
-
-          <!-- VERSIÓN -->
+        <!-- DIVISIÓN + PLATAFORMA -->
+        <div class="form-row">
           <div class="form-group">
-            <label for="version">Número de versión <span class="auto-badge">OPCIONAL</span></label>
-            <input id="version" type="number" min="1" max="99" placeholder="Solo si hay variantes creativas (1, 2, 3...)">
+            <label for="division">División <span class="required-star">*</span></label>
+            <select id="division" required>
+              <option value="">Seleccionar...</option>
+              <option value="branding">Branding</option>
+              <option value="retail">Retail</option>
+              <option value="ecom">Ecommerce</option>
+            </select>
           </div>
-
-          <!-- ACTIONS -->
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">
-              <i data-lucide="rocket" class="icon"></i>
-              Generar UTM
-            </button>
-            <button type="button" class="btn btn-secondary" data-action="reset-form">
-              <i data-lucide="refresh-cw" class="icon"></i>
-              Limpiar
-            </button>
-          </div>
-        </form>
-
-        <!-- RESULT BOX (oculto hasta que se genera la UTM) -->
-        <div id="resultContainer" class="hidden">
-          <div class="result-box">
-            <button class="copy-btn" id="copyBtn" data-action="copy-result">
-              <i data-lucide="clipboard-copy" class="icon"></i>
-              Copiar
-            </button>
-            <div class="result-final-label">URL final etiquetada</div>
-            <div id="resultText" class="result-text"></div>
+          <div class="form-group">
+            <label for="plataforma">Plataforma <span class="required-star">*</span></label>
+            <select id="plataforma" required>
+              <option value="">Seleccionar...</option>
+              <option value="facebook">Meta (FB / IG)</option>
+              <option value="google">Google</option>
+              <option value="tiktok">TikTok</option>
+              <option value="youtube">YouTube</option>
+              <option value="custom">+ Personalizada</option>
+            </select>
+            <input id="plataformaCustom" class="hidden custom-input" type="text" placeholder="ej: pinterest, linkedin"/>
           </div>
         </div>
-      </div>
 
-    </div>
-
-    <!-- ===== Columna derecha: stats + history ===== -->
-    <div class="col-right">
-
-      <div class="card">
-        <div class="card-title">
-          <i data-lucide="bar-chart-2" class="icon-lg"></i>
-          Historial
+        <!-- MEDIUM (auto) + OBJETIVO -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="medium">Medium <span class="auto-badge">AUTO</span></label>
+            <input id="medium" type="text" readonly placeholder="Se genera según división"/>
+            <span class="field-hint">Branding y Retail → social-media · Ecom → social-ads</span>
+          </div>
+          <div class="form-group">
+            <label for="objetivo">Objetivo <span class="required-star">*</span></label>
+            <select id="objetivo" required>
+              <option value="">Seleccionar...</option>
+              <option value="alc">Alcance</option>
+              <option value="rpr">Reproducciones</option>
+              <option value="traf">Tráfico</option>
+              <option value="conv">Conversiones</option>
+            </select>
+            <span class="field-hint">En la UTM se abrevia (alc, rpr, traf, conv)</span>
+          </div>
         </div>
 
-        <div class="stat-grid">
-          <div class="stat-item"><div class="stat-num" id="totalCount">0</div><div class="stat-label">Total</div></div>
-          <div class="stat-item"><div class="stat-num" id="brandingCount">0</div><div class="stat-label">Branding</div></div>
-          <div class="stat-item"><div class="stat-num" id="retailCount">0</div><div class="stat-label">Retail</div></div>
-          <div class="stat-item"><div class="stat-num" id="ecomCount">0</div><div class="stat-label">Ecom</div></div>
+        <!-- AUDIENCIA (condicional · solo Ecom) -->
+        <div id="audienciaGroup" class="form-group hidden conditional-row">
+          <label for="audiencia">Audiencia <span class="required-star">*</span></label>
+          <select id="audiencia">
+            <option value="">Seleccionar...</option>
+          </select>
+          <input id="audienciaCustom" class="hidden custom-input" type="text" placeholder="ej: pmax, sem"/>
+          <span class="field-hint">Solo aplica a Ecommerce</span>
         </div>
 
-        <div class="history-actions">
-          <button class="btn btn-csv btn-sm" data-action="export-csv">
-            <i data-lucide="download" class="icon"></i>
-            CSV
-          </button>
-          <button class="btn btn-excel btn-sm" data-action="export-excel">
-            <i data-lucide="file-spreadsheet" class="icon"></i>
-            Excel
-          </button>
-          <button class="btn btn-danger btn-sm" data-action="clear-history">
-            <i data-lucide="trash-2" class="icon"></i>
-            Limpiar
-          </button>
+        <!-- FORMATO + TEMA -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="formato">Formato <span class="required-star">*</span></label>
+            <input id="formato" type="text" list="formatList" placeholder="ej: carrusel, video, reel..."/>
+            <datalist id="formatList"></datalist>
+            <span class="field-hint">Sugerencias automáticas mientras escribes</span>
+          </div>
+          <div class="form-group">
+            <label for="tema">Tema / Producto <span class="required-star">*</span></label>
+            <input id="tema" type="text" placeholder="ej: nueva colección love boho, bisutería, 30 off"/>
+            <span class="field-hint">Campo libre · se sanitiza automáticamente</span>
+          </div>
         </div>
 
-        <div id="utmList" class="utm-list"></div>
+        <!-- MES + AÑO -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="mes">Mes <span class="required-star">*</span></label>
+            <select id="mes" required>
+              <option value="">Seleccionar...</option>
+              <option value="ene">Enero</option>
+              <option value="feb">Febrero</option>
+              <option value="mar">Marzo</option>
+              <option value="abr">Abril</option>
+              <option value="may">Mayo</option>
+              <option value="jun">Junio</option>
+              <option value="jul">Julio</option>
+              <option value="ago">Agosto</option>
+              <option value="set">Setiembre</option>
+              <option value="oct">Octubre</option>
+              <option value="nov">Noviembre</option>
+              <option value="dic">Diciembre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="ano">Año <span class="required-star">*</span></label>
+            <select id="ano" required></select>
+            <span class="field-hint">Va al utm_content abreviado a 2 dígitos (ej: 26)</span>
+          </div>
+        </div>
+
+        <!-- VERSIÓN -->
+        <div class="form-group">
+          <label for="version">Número de versión <span class="auto-badge">OPCIONAL</span></label>
+          <input id="version" type="number" min="1" max="99" placeholder="Solo si hay variantes creativas (1, 2, 3...)"/>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="btn-group form-actions">
+          <button type="submit" class="btn btn-primary btn-generate">
+            <i data-lucide="rocket" class="icon"></i> Generar UTM
+          </button>
+          <button type="button" class="btn btn-secondary" data-action="reset-form">
+            <i data-lucide="refresh-cw" class="icon"></i> Limpiar
+          </button>
+        </div>
+        <div class="kbd-hint" id="kbdHint">
+          <kbd>⌘</kbd>+<kbd>Enter</kbd> generar · <kbd>⌘</kbd>+<kbd>K</kbd> primer campo · <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> copiar último
+        </div>
+      </form>
+
+      <!-- RESULT BOX -->
+      <div id="resultContainer" class="hidden">
+        <div class="result-box">
+          <button class="copy-btn" id="copyBtn" data-action="copy-result">
+            <i data-lucide="clipboard-copy" class="icon"></i> Copiar
+          </button>
+          <div class="result-final-label">URL final etiquetada</div>
+          <div id="resultText" class="result-text"></div>
+        </div>
       </div>
 
     </div>
   </div>
 
   <!-- ============================================
-       FOOTER
+       SECCIÓN 4 · HISTORIAL DE UTMs
        ============================================ -->
-  <footer class="footer">
-    <p>Linky · <strong>RESET</strong> 2026 · The Lab · MVP Sifrah v0.1</p>
-  </footer>
+  <div class="history-container">
+    <div class="card">
+      <div class="card-title"><i data-lucide="bar-chart-2" class="icon"></i> Historial de UTMs</div>
 
+      <!-- Stats Grid (4 cards coloreadas) -->
+      <div class="stat-grid">
+        <div class="stat-card stat-total">
+          <div class="stat-number" id="totalCount">0</div>
+          <div class="stat-label">Total</div>
+        </div>
+        <div class="stat-card stat-branding">
+          <div class="stat-number" id="brandingCount">0</div>
+          <div class="stat-label">Branding</div>
+        </div>
+        <div class="stat-card stat-retail">
+          <div class="stat-number" id="retailCount">0</div>
+          <div class="stat-label">Retail</div>
+        </div>
+        <div class="stat-card stat-ecom">
+          <div class="stat-number" id="ecomCount">0</div>
+          <div class="stat-label">Ecom</div>
+        </div>
+      </div>
+
+      <!-- Export Buttons (paleta SF: verde / teal / naranja) -->
+      <div class="btn-group export-buttons">
+        <button class="btn btn-success" data-action="export-csv">
+          <i data-lucide="download" class="icon"></i> CSV
+        </button>
+        <button class="btn btn-success btn-excel" data-action="export-excel">
+          <i data-lucide="file-spreadsheet" class="icon"></i> Excel
+        </button>
+        <button class="btn btn-warning" data-action="clear-history">
+          <i data-lucide="trash-2" class="icon"></i> Borrar
+        </button>
+      </div>
+
+      <!-- History Toolbar: search + filter chips -->
+      <div class="history-toolbar">
+        <div class="history-search">
+          <i data-lucide="search" class="icon"></i>
+          <input type="text" id="historySearch" placeholder="Buscar en campaña, content, tema o URL..."/>
+        </div>
+        <div class="history-filters" id="historyFilters">
+          <button class="filter-chip active" data-action="set-filter" data-filter="all">Todas</button>
+          <button class="filter-chip" data-action="set-filter" data-filter="branding">Branding</button>
+          <button class="filter-chip" data-action="set-filter" data-filter="retail">Retail</button>
+          <button class="filter-chip" data-action="set-filter" data-filter="ecom">Ecom</button>
+        </div>
+      </div>
+
+      <!-- UTM List -->
+      <div id="utmList" class="utm-list"></div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SECCIÓN 5 · FOOTER
+       ============================================ -->
+  <div class="footer">Powered by <span class="font-display">THE LAB</span> | Linky Sifrah v0.1</div>
 </div>
 
 <!-- ============================================
-     HELP FLOAT BUTTON (fixed bottom-right)
+     SECCIÓN 6 · BOTÓN DE AYUDA (FAB)
      ============================================ -->
-<button class="help-float" id="helpFloatBtn" data-action="open-help" title="Ayuda">
-  <i data-lucide="help-circle" class="icon-lg"></i>
+<button class="help-btn" id="helpFloatBtn" data-action="open-help" title="Ayuda">
+  <i data-lucide="info" class="icon"></i>
 </button>
 
 <!-- ============================================
-     MODAL: HELP
+     SECCIÓN 7 · MODAL DE CONFIGURACIÓN
      ============================================ -->
-<div class="modal-overlay hidden" id="helpModal" data-modal-overlay>
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="modal-title">
-        <i data-lucide="book-open" class="icon"></i>
-        Guía rápida
+<div id="configModal" class="config-modal-overlay hidden" data-config-modal-overlay>
+  <div class="config-modal-content">
+
+    <div class="config-modal-header">
+      <h2><i data-lucide="settings" class="icon"></i> Configuración del Generador</h2>
+      <div class="config-header-actions">
+        <button class="config-restore-btn" data-action="restore-defaults" title="Restaurar valores por defecto">
+          <i data-lucide="refresh-cw" class="icon"></i> Restaurar
+        </button>
+        <button class="config-modal-close" data-action="close-modal" data-modal="configModal" aria-label="Cerrar">
+          <i data-lucide="x" class="icon"></i>
+        </button>
       </div>
+    </div>
+
+    <div class="config-tabs">
+      <button class="config-tab-btn active" data-action="switch-config-tab" data-tab="urls">
+        <i data-lucide="map-pin" class="icon"></i> URLs
+      </button>
+      <button class="config-tab-btn" data-action="switch-config-tab" data-tab="audiencias">
+        <i data-lucide="users" class="icon"></i> Audiencias
+      </button>
+      <button class="config-tab-btn" data-action="switch-config-tab" data-tab="formatos">
+        <i data-lucide="layers" class="icon"></i> Formatos
+      </button>
+    </div>
+
+    <div class="config-modal-body">
+
+      <!-- TAB URLs -->
+      <div id="configTabUrls" class="config-tab-content">
+        <div class="config-section-title"><i data-lucide="map-pin" class="icon"></i> URLs frecuentes de Sifrah</div>
+        <div id="urlsList" class="config-items-list"></div>
+        <button class="config-add-btn" data-action="show-add-url-form">
+          <i data-lucide="plus" class="icon"></i> Agregar Nueva URL
+        </button>
+
+        <div id="addUrlForm" class="config-form hidden">
+          <div class="config-form-title"><i data-lucide="plus" class="icon"></i> Agregar Nueva URL</div>
+          <div class="config-form-group">
+            <label for="newUrlLabel">Etiqueta * <span class="config-form-hint">(legible para humanos)</span></label>
+            <input type="text" id="newUrlLabel" placeholder="Ej: Colección Pets" />
+          </div>
+          <div class="config-form-group">
+            <label for="newUrlValue">URL completa *</label>
+            <input type="url" id="newUrlValue" placeholder="https://sifrah.com/..." />
+          </div>
+          <div class="config-form-actions">
+            <button class="config-form-btn save" data-action="save-new-url">
+              <i data-lucide="save" class="icon"></i> Guardar
+            </button>
+            <button class="config-form-btn cancel" data-action="cancel-add-url">
+              <i data-lucide="x" class="icon"></i> Cancelar
+            </button>
+          </div>
+        </div>
+
+        <div class="config-preview-box">
+          <div class="config-preview-title"><i data-lucide="eye" class="icon"></i> Preview</div>
+          <div class="config-preview-content">
+            Las URLs configuradas aparecen en el dropdown <strong>URL de Destino</strong> del formulario.
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB Audiencias -->
+      <div id="configTabAudiencias" class="config-tab-content hidden">
+        <div class="config-section-title"><i data-lucide="users" class="icon"></i> Audiencias de Ecommerce</div>
+        <div id="audienciasList" class="config-items-list"></div>
+        <button class="config-add-btn" data-action="show-add-audience-form">
+          <i data-lucide="plus" class="icon"></i> Agregar Nueva Audiencia
+        </button>
+
+        <div id="addAudienceForm" class="config-form hidden">
+          <div class="config-form-title"><i data-lucide="plus" class="icon"></i> Agregar Nueva Audiencia</div>
+          <div class="config-form-group">
+            <label for="newAudLabel">Etiqueta * <span class="config-form-hint">(legible para humanos)</span></label>
+            <input type="text" id="newAudLabel" placeholder="Ej: Performance Max" />
+          </div>
+          <div class="config-form-group">
+            <label for="newAudValue">Valor en UTM * <span class="config-form-hint">(se sanitiza al escribir)</span></label>
+            <input type="text" id="newAudValue" placeholder="Ej: pmax, sem, prospecting" />
+          </div>
+          <div class="config-form-actions">
+            <button class="config-form-btn save" data-action="save-new-audience">
+              <i data-lucide="save" class="icon"></i> Guardar
+            </button>
+            <button class="config-form-btn cancel" data-action="cancel-add-audience">
+              <i data-lucide="x" class="icon"></i> Cancelar
+            </button>
+          </div>
+        </div>
+
+        <div class="config-preview-box">
+          <div class="config-preview-title"><i data-lucide="eye" class="icon"></i> Preview UTM (solo Ecom)</div>
+          <div class="config-preview-content">
+            <div class="config-preview-label">utm_content:</div>
+            <div class="config-preview-value" id="previewAudiencia">sifrah-may-26-ecom-conv-<span class="preview-slot">[Tu valor]</span>-formato-tema</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB Formatos -->
+      <div id="configTabFormatos" class="config-tab-content hidden">
+        <div class="config-section-title"><i data-lucide="layers" class="icon"></i> Formatos sugeridos (autocompletado)</div>
+        <div id="formatosList" class="config-items-list"></div>
+        <button class="config-add-btn" data-action="show-add-formato-form">
+          <i data-lucide="plus" class="icon"></i> Agregar Nuevo Formato
+        </button>
+
+        <div id="addFormatoForm" class="config-form hidden">
+          <div class="config-form-title"><i data-lucide="plus" class="icon"></i> Agregar Nuevo Formato</div>
+          <div class="config-form-group">
+            <label for="newFormato">Formato * <span class="config-form-hint">(se sanitiza al escribir)</span></label>
+            <input type="text" id="newFormato" placeholder="Ej: short, vertical-video, story-multi" />
+          </div>
+          <div class="config-form-actions">
+            <button class="config-form-btn save" data-action="save-new-formato">
+              <i data-lucide="save" class="icon"></i> Guardar
+            </button>
+            <button class="config-form-btn cancel" data-action="cancel-add-formato">
+              <i data-lucide="x" class="icon"></i> Cancelar
+            </button>
+          </div>
+        </div>
+
+        <div class="config-preview-box">
+          <div class="config-preview-title"><i data-lucide="eye" class="icon"></i> Preview UTM</div>
+          <div class="config-preview-content">
+            <div class="config-preview-label">utm_content:</div>
+            <div class="config-preview-value" id="previewFormato">sifrah-may-26-branding-alc-<span class="preview-slot">[Tu formato]</span>-tema</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SECCIÓN 8 · MODAL DE AYUDA
+     ============================================ -->
+<div id="helpModal" class="modal-overlay hidden" data-modal-overlay>
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2><i data-lucide="book-open" class="icon"></i> Guía Completa del Generador UTM</h2>
       <button class="modal-close" data-action="close-modal" data-modal="helpModal" aria-label="Cerrar">
         <i data-lucide="x" class="icon"></i>
       </button>
     </div>
+
     <div class="modal-body">
 
-      <div class="help-section">
-        <h4><i data-lucide="target" class="icon"></i> Estructura de la UTM Sifrah</h4>
-        <p>Cada UTM se compone de 4 parámetros estandarizados según las reglas del equipo:</p>
-        <ul>
-          <li><code>utm_campaign</code> = <code>sifrah-{mes}-{división}</code></li>
-          <li><code>utm_medium</code> = <code>social-media</code> (Branding/Retail) o <code>social-ads</code> (Ecom)</li>
-          <li><code>utm_source</code> = la plataforma (facebook, google, tiktok, youtube)</li>
-          <li><code>utm_content</code> = <code>sifrah-{mes}-{año}-{división}-{detalle táctico}</code></li>
-        </ul>
-        <p>El año va abreviado a 2 dígitos solo en utm_content para poder filtrar por mes específico de un año específico (ej: <code>may-26</code>).</p>
+      <!-- 1. ¿Qué es? -->
+      <div class="modal-section">
+        <h3><i data-lucide="target" class="icon"></i> ¿Qué es Linky?</h3>
+        <p>Linky es la herramienta de Reset para crear URLs etiquetadas (UTM) de las campañas digitales de <strong>Sifrah</strong>. Las UTMs permiten identificar exactamente de dónde viene cada usuario, qué creatividad funcionó mejor y cómo distribuir el presupuesto en Google Analytics 4 y Looker Studio.</p>
       </div>
 
-      <div class="help-section">
-        <h4><i data-lucide="lightbulb" class="icon"></i> Ejemplos por división</h4>
-        <p><strong>Branding:</strong> alcance o reproducciones, formato + tema</p>
-        <div class="example-utm">sifrah-may-26-branding-alc-video-lanzamiento-club-brillo</div>
-
-        <p><strong>Retail:</strong> alcance o tráfico, formato + tema/promo</p>
-        <div class="example-utm">sifrah-may-26-retail-traf-estatico-30-off-verano-2</div>
-
-        <p><strong>Ecom (con audiencia):</strong> conversiones, audiencia + formato + tema</p>
-        <div class="example-utm">sifrah-may-26-ecom-conv-lal-carrusel-coleccion-love-boho-1</div>
-      </div>
-
-      <div class="help-section">
-        <h4><i data-lucide="search" class="icon"></i> Cómo filtrar en GA4</h4>
-        <p>Usa <code>Adquisición → Tráfico de adquisición</code> y filtra por:</p>
+      <!-- 2. ¿Por qué importa? -->
+      <div class="modal-section">
+        <h3><i data-lucide="star" class="icon"></i> ¿Por qué importa?</h3>
         <ul>
-          <li>Por mes y año (Linky): <code>utm_content</code> contiene <code>-may-26-</code></li>
-          <li>Por año completo: <code>utm_content</code> contiene <code>-26-</code></li>
-          <li>Por división: <code>utm_campaign</code> termina con <code>-ecom</code> / <code>-branding</code> / <code>-retail</code></li>
-          <li>Por plataforma: <code>utm_source</code> es exactamente <code>facebook</code></li>
-          <li>Por audiencia (solo Ecom): <code>utm_content</code> contiene <code>-lal-</code></li>
+          <li><strong>Medición precisa:</strong> sabes exactamente qué pieza, audiencia o plataforma genera ventas</li>
+          <li><strong>Optimización de presupuesto:</strong> inviertes en lo que realmente performa</li>
+          <li><strong>Reportes claros:</strong> filtras por mes, división, audiencia o creatividad sin ambigüedad</li>
+          <li><strong>Trazabilidad:</strong> cada UTM cuenta una historia única, no se canibalizan datos</li>
         </ul>
       </div>
 
-      <div class="tip-box">
-        <strong>Tip:</strong> el campo Tema acepta texto libre. Linky limpia automáticamente las tildes, la ñ, los espacios (los convierte en guiones) y los caracteres especiales para que la UTM nunca se rompa.
+      <!-- 3. División: Branding / Retail / Ecom -->
+      <div class="modal-section">
+        <h3><i data-lucide="building-2" class="icon"></i> División: Branding / Retail / Ecommerce</h3>
+        <p>Sifrah trabaja con tres divisiones, cada una con un objetivo y una mecánica distinta:</p>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Característica</th>
+                <th>BRANDING</th>
+                <th>RETAIL</th>
+                <th>ECOMMERCE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Medium auto</strong></td>
+                <td><code>social-media</code></td>
+                <td><code>social-media</code></td>
+                <td><code>social-ads</code></td>
+              </tr>
+              <tr>
+                <td><strong>Audiencia</strong></td>
+                <td>No aplica</td>
+                <td>No aplica</td>
+                <td>Sí (obligatoria)</td>
+              </tr>
+              <tr>
+                <td><strong>Objetivos típicos</strong></td>
+                <td>Alcance · Reproducciones</td>
+                <td>Alcance · Tráfico</td>
+                <td>Conversiones</td>
+              </tr>
+              <tr>
+                <td><strong>Ejemplo campaign</strong></td>
+                <td><code>sifrah-may-branding</code></td>
+                <td><code>sifrah-may-retail</code></td>
+                <td><code>sifrah-may-ecom</code></td>
+              </tr>
+              <tr>
+                <td><strong>Ejemplo content</strong></td>
+                <td><code>sifrah-may-26-branding-alc-video-club-brillo</code></td>
+                <td><code>sifrah-may-26-retail-traf-estatico-30-off-2</code></td>
+                <td><code>sifrah-may-26-ecom-conv-lal-carrusel-love-boho-1</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div class="warning-box">
-        <strong>Importante:</strong> los datos del historial se guardan localmente en este navegador. Si limpias el caché, se pierden. Usa <strong>Exportar CSV</strong> regularmente para backup.
+      <!-- 4. Plataformas -->
+      <div class="modal-section">
+        <h3><i data-lucide="globe" class="icon"></i> Plataformas Disponibles</h3>
+        <div class="platform-grid">
+          <div class="platform-tag">Meta (FB / IG)</div>
+          <div class="platform-tag">Google</div>
+          <div class="platform-tag">TikTok</div>
+          <div class="platform-tag">YouTube</div>
+          <div class="platform-tag">+ Personalizada</div>
+        </div>
+        <p style="margin-top: 12px;">Si la plataforma del cliente cambia (ej: Pinterest), usa <strong>+ Personalizada</strong>: el valor se sanitiza automáticamente y queda como <code>utm_source</code>.</p>
+      </div>
+
+      <!-- 5. Objetivos y Medium -->
+      <div class="modal-section">
+        <h3><i data-lucide="target" class="icon"></i> Objetivos y Medium</h3>
+        <h4>Objetivos disponibles (todos para las 3 divisiones):</h4>
+        <ul>
+          <li><strong>Alcance (alc):</strong> maximizar impresiones</li>
+          <li><strong>Reproducciones (rpr):</strong> video views</li>
+          <li><strong>Tráfico (traf):</strong> llevar usuarios al sitio</li>
+          <li><strong>Conversiones (conv):</strong> generar compras o acciones específicas</li>
+        </ul>
+        <h4>Medium (se genera automáticamente según división):</h4>
+        <ul>
+          <li><strong>Branding / Retail → <code>social-media</code></strong> (orgánico social pago tradicional)</li>
+          <li><strong>Ecommerce → <code>social-ads</code></strong> (paid ads con audiencias específicas)</li>
+        </ul>
+      </div>
+
+      <!-- 6. Audiencia (solo Ecom) -->
+      <div class="modal-section">
+        <h3><i data-lucide="users" class="icon"></i> Audiencia (solo Ecommerce)</h3>
+        <p>El campo audiencia <strong>solo aparece</strong> cuando la división es Ecommerce. Identifica el segmento del público al que se le sirvió la creatividad:</p>
+        <ul>
+          <li><strong>LAL (Lookalike):</strong> usuarios similares a clientes existentes</li>
+          <li><strong>BBDD:</strong> base de datos propia del cliente (CRM upload)</li>
+          <li><strong>Advantage+:</strong> audiencia automatizada de Meta Advantage</li>
+          <li><strong>Intereses:</strong> targeting por intereses declarados</li>
+          <li><strong>RMKT (Retargeting):</strong> usuarios que ya interactuaron con la marca</li>
+          <li><strong>+ Personalizada:</strong> cualquier otra (pmax, sem, prospecting...)</li>
+        </ul>
+        <div class="tip-box">
+          <strong><i data-lucide="lightbulb" class="icon"></i> Tip:</strong> en el modal de Ajustes puedes agregar audiencias custom permanentes para no escribirlas cada vez.
+        </div>
+      </div>
+
+      <!-- 7. Filtrado en GA4 -->
+      <div class="modal-section">
+        <h3><i data-lucide="bar-chart-2" class="icon"></i> Cómo Filtrar en Google Analytics 4</h3>
+        <h4>Ruta básica:</h4>
+        <div class="code-example">Reports → Acquisition → Traffic Acquisition</div>
+
+        <h4>Por mes específico de un año:</h4>
+        <div class="code-example">
+Session manual ad content CONTAINS "-may-26-"<br>
+(captura todas las UTMs de mayo 2026, sin importar división)
+        </div>
+
+        <h4>Por año completo:</h4>
+        <div class="code-example">
+Session manual ad content CONTAINS "-26-"<br>
+(captura todo el 2026)
+        </div>
+
+        <h4>Por división específica:</h4>
+        <div class="code-example">
+Session campaign ENDS WITH "-ecom" → solo Ecommerce<br>
+Session campaign ENDS WITH "-branding" → solo Branding<br>
+Session campaign ENDS WITH "-retail" → solo Retail
+        </div>
+
+        <h4>Por audiencia (solo Ecom):</h4>
+        <div class="code-example">
+Session manual ad content CONTAINS "-lal-" → Lookalike<br>
+Session manual ad content CONTAINS "-rmkt-" → Retargeting<br>
+Session manual ad content CONTAINS "-bbdd-" → Base de datos
+        </div>
+
+        <h4>Por plataforma:</h4>
+        <div class="code-example">
+Session source = "facebook" → Meta (FB+IG)<br>
+Session source = "google"<br>
+Session source = "tiktok"<br>
+Session source = "youtube"
+        </div>
+
+        <div class="tip-box">
+          <strong><i data-lucide="search" class="icon"></i> Consejo Pro:</strong> usa <strong>Explorations</strong> en GA4 para análisis combinados (Source + Medium + Campaign + Content).
+        </div>
+      </div>
+
+      <!-- 8. Caracteres prohibidos -->
+      <div class="modal-section">
+        <h3><i data-lucide="alert-triangle" class="icon"></i> Caracteres Prohibidos</h3>
+        <p>Los campos libres (<strong>tema</strong>, <strong>formato</strong>, plataforma custom, audiencia custom) <strong>se sanitizan automáticamente mientras escribes</strong>. Aún así, esta es la regla:</p>
+
+        <div class="warning-box">
+          <strong><i data-lucide="alert-triangle" class="icon"></i> NO uses estos caracteres:</strong>
+          <div class="code-example" style="margin-top:8px;">
+• Espacios: "love boho" → se convierten en guiones<br>
+• Tildes: "promoción", "más" → se quitan<br>
+• Eñes: "diseño", "niño" → se reemplazan por n<br>
+• Puntuación española: "¿qué?", "¡wow!" → se eliminan<br>
+• Emojis: 🔥💚 → se eliminan<br>
+• Comillas tipográficas: "smart quotes" → se eliminan<br>
+• Especiales: %, &amp;, #, ×, /, \, &lt;, &gt; → se eliminan
+          </div>
+
+          <h4 style="margin-top:16px;margin-bottom:8px;color:#10b981;">Linky aplica esta limpieza automáticamente:</h4>
+          <div class="code-example" style="margin-top:8px;background:#f0fdf4;border-color:#86efac;">
+[Tipeas]   "Colección Niñas Otoño 2026"<br>
+[Linky]    "coleccion-ninas-otono-2026"<br><br>
+[Tipeas]   "🔥 30% OFF — Verano!"<br>
+[Linky]    "30-off-verano"
+          </div>
+
+          <p style="margin-top:12px;"><strong><i data-lucide="lightbulb" class="icon"></i> Tip:</strong> verás un toast informativo cuando Linky haga limpiezas relevantes (tildes removidas, emojis eliminados, etc.).</p>
+        </div>
+      </div>
+
+      <!-- 9. Ejemplos prácticos -->
+      <div class="modal-section">
+        <h3><i data-lucide="briefcase" class="icon"></i> Ejemplos Prácticos</h3>
+
+        <h4>Ejemplo 1 · Branding en Meta</h4>
+        <div class="code-example">
+URL: https://sifrah.com/<br>
+División: Branding<br>
+Plataforma: Meta (FB / IG)<br>
+Objetivo: Alcance<br>
+Formato: video<br>
+Tema: lanzamiento club brillo<br>
+Mes / Año: Mayo / 2026<br><br>
+<strong>UTM generada:</strong><br>
+utm_source=facebook<br>
+utm_medium=social-media<br>
+utm_campaign=sifrah-may-branding<br>
+utm_content=sifrah-may-26-branding-alc-video-lanzamiento-club-brillo
+        </div>
+
+        <h4>Ejemplo 2 · Retail en TikTok</h4>
+        <div class="code-example">
+URL: https://sifrah.com/collections/ofertas-sifrah<br>
+División: Retail<br>
+Plataforma: TikTok<br>
+Objetivo: Tráfico<br>
+Formato: estatico<br>
+Tema: 30 off verano<br>
+Versión: 2<br>
+Mes / Año: Mayo / 2026<br><br>
+<strong>UTM generada:</strong><br>
+utm_source=tiktok<br>
+utm_medium=social-media<br>
+utm_campaign=sifrah-may-retail<br>
+utm_content=sifrah-may-26-retail-traf-estatico-30-off-verano-2
+        </div>
+
+        <h4>Ejemplo 3 · Ecommerce en Google con audiencia LAL</h4>
+        <div class="code-example">
+URL: https://sifrah.com/collections/nueva-coleccion<br>
+División: Ecommerce<br>
+Plataforma: Google<br>
+Objetivo: Conversiones<br>
+Audiencia: LAL<br>
+Formato: carrusel<br>
+Tema: colección love boho<br>
+Versión: 1<br>
+Mes / Año: Mayo / 2026<br><br>
+<strong>UTM generada:</strong><br>
+utm_source=google<br>
+utm_medium=social-ads<br>
+utm_campaign=sifrah-may-ecom<br>
+utm_content=sifrah-may-26-ecom-conv-lal-carrusel-coleccion-love-boho-1
+        </div>
+      </div>
+
+      <!-- 10. FAQ -->
+      <div class="modal-section">
+        <h3><i data-lucide="help-circle" class="icon"></i> Preguntas Frecuentes</h3>
+
+        <div class="faq-item">
+          <div class="faq-question">¿Por qué Ecom usa audiencia y Branding/Retail no?</div>
+          <div class="faq-answer">Porque el modelo de medición de Ecom requiere identificar el segmento de público (LAL vs RMKT vs BBDD) para optimizar la inversión por audiencia. Branding y Retail tienen objetivos masivos (awareness, tráfico) y no necesitan ese nivel de granularidad.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">¿Qué es exactamente <code>lal</code>?</div>
+          <div class="faq-answer">Lookalike Audience: usuarios que se parecen a tus mejores clientes existentes (basado en compras, interacciones o lista propia). Es uno de los tipos de targeting más rentables en Meta Ads y Google Ads.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">¿El año va en utm_campaign también?</div>
+          <div class="faq-answer">No. <code>utm_campaign</code> es <code>sifrah-{mes}-{división}</code> (sin año). El año va solo en <code>utm_content</code> abreviado a 2 dígitos (ej: <code>26</code>). Esto facilita filtrar "todas las campañas de Mayo de cualquier año" en GA4.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">¿Puedo agregar URLs / audiencias / formatos custom?</div>
+          <div class="faq-answer">Sí, en el modal de <strong>Ajustes</strong> hay 3 tabs (URLs, Audiencias, Formatos) donde puedes agregar y eliminar items. Los seed (badge <strong>CORE</strong>) no se pueden borrar; los tuyos sí.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">¿Puedo exportar mi historial?</div>
+          <div class="faq-answer">Sí. Usa los botones <strong>CSV</strong> o <strong>Excel</strong> en la sección de historial. CSV incluye BOM UTF-8 (compatible con Excel/Sheets); Excel descarga un .xlsx con headers en español.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">¿Qué pasa si la URL ya tiene UTMs?</div>
+          <div class="faq-answer">Linky elimina automáticamente cualquier <code>utm_*</code> preexistente antes de agregar los nuevos. Así pegas cualquier link y queda limpio.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">¿Y si la URL tiene un fragment (<code>#anchor</code>)?</div>
+          <div class="faq-answer">Linky lo preserva. Los UTMs van entre el query y el fragment, igual que la spec de URLs requiere.</div>
+        </div>
+      </div>
+
+      <!-- 11. Buenas prácticas -->
+      <div class="modal-section">
+        <h3><i data-lucide="sparkles" class="icon"></i> Buenas Prácticas Finales</h3>
+        <ul>
+          <li>Completa siempre todos los campos obligatorios marcados con <span class="required-star">*</span></li>
+          <li>Sé descriptivo en <strong>tema</strong>: "club brillo" es mejor que "promo"</li>
+          <li>Usa <strong>versión</strong> cuando hay 2-3 variantes creativas de la misma pieza</li>
+          <li>Exporta el CSV regularmente: el historial vive en <em>localStorage</em> y se borra si limpias el caché</li>
+          <li>Si pegas la URL en Meta/Google y la herramienta agrega su propio <code>utm_*</code>, ese gana — no es problema de Linky</li>
+          <li>No reuses la misma UTM para piezas diferentes (perderás granularidad)</li>
+        </ul>
+
+        <div class="warning-box" style="margin-top:20px;">
+          <strong><i data-lucide="alert-triangle" class="icon"></i> RECUERDA:</strong> Sifrah trabaja con 3 divisiones (Branding, Retail, Ecom). Cada una tiene su own modelo: respetar la división correcta es lo más importante para que los reportes lleguen a la persona correcta.
+        </div>
       </div>
 
     </div>
@@ -347,109 +758,15 @@
 </div>
 
 <!-- ============================================
-     MODAL: CONFIG (Ajustes)
-     ============================================ -->
-<div class="modal-overlay hidden" id="configModal" data-modal-overlay>
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="modal-title">
-        <i data-lucide="settings" class="icon"></i>
-        Ajustes
-      </div>
-      <button class="modal-close" data-action="close-modal" data-modal="configModal" aria-label="Cerrar">
-        <i data-lucide="x" class="icon"></i>
-      </button>
-    </div>
-    <div class="modal-body">
-
-      <div class="tabs">
-        <button class="tab-btn active" data-action="switch-tab" data-tab="urls">URLs</button>
-        <button class="tab-btn" data-action="switch-tab" data-tab="audiencias">Audiencias</button>
-        <button class="tab-btn" data-action="switch-tab" data-tab="formatos">Formatos sugeridos</button>
-      </div>
-
-      <!-- TAB URLs -->
-      <div class="tab-content active" id="tab-urls">
-        <p style="color: #666; font-size: 13px; margin-bottom: var(--space-md);">
-          Gestiona las URLs frecuentes que aparecen en el dropdown del formulario.
-        </p>
-        <div class="config-list" id="urlsList"></div>
-        <div class="config-add">
-          <div>
-            <label for="newUrlLabel" style="font-size: 11px; color: #666; display: block; margin-bottom: 4px;">Etiqueta</label>
-            <input type="text" id="newUrlLabel" placeholder="ej: Colección Pets">
-          </div>
-          <div>
-            <label for="newUrlValue" style="font-size: 11px; color: #666; display: block; margin-bottom: 4px;">URL</label>
-            <input type="url" id="newUrlValue" placeholder="https://sifrah.com/...">
-          </div>
-          <button class="btn btn-primary btn-sm" data-action="add-url">
-            <i data-lucide="plus" class="icon"></i>
-            Agregar
-          </button>
-        </div>
-      </div>
-
-      <!-- TAB AUDIENCIAS -->
-      <div class="tab-content" id="tab-audiencias">
-        <p style="color: #666; font-size: 13px; margin-bottom: var(--space-md);">
-          Gestiona las audiencias disponibles para campañas Ecom.
-        </p>
-        <div class="config-list" id="audienciasList"></div>
-        <div class="config-add">
-          <div>
-            <label for="newAudLabel" style="font-size: 11px; color: #666; display: block; margin-bottom: 4px;">Etiqueta</label>
-            <input type="text" id="newAudLabel" placeholder="ej: Performance Max">
-          </div>
-          <div>
-            <label for="newAudValue" style="font-size: 11px; color: #666; display: block; margin-bottom: 4px;">Valor en UTM</label>
-            <input type="text" id="newAudValue" placeholder="ej: pmax">
-          </div>
-          <button class="btn btn-primary btn-sm" data-action="add-audience">
-            <i data-lucide="plus" class="icon"></i>
-            Agregar
-          </button>
-        </div>
-      </div>
-
-      <!-- TAB FORMATOS -->
-      <div class="tab-content" id="tab-formatos">
-        <p style="color: #666; font-size: 13px; margin-bottom: var(--space-md);">
-          Sugerencias de formato que aparecen como autocompletado en el campo Formato.
-        </p>
-        <div class="config-list" id="formatosList"></div>
-        <div class="config-add">
-          <div style="grid-column: 1 / 3;">
-            <label for="newFormato" style="font-size: 11px; color: #666; display: block; margin-bottom: 4px;">Formato</label>
-            <input type="text" id="newFormato" placeholder="ej: short, vertical-video">
-          </div>
-          <button class="btn btn-primary btn-sm" data-action="add-formato">
-            <i data-lucide="plus" class="icon"></i>
-            Agregar
-          </button>
-        </div>
-      </div>
-
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" data-action="reset-config">
-        <i data-lucide="refresh-cw" class="icon"></i>
-        Restaurar defaults
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================
-     MODAL: CONFIRM (helper showConfirm)
+     SECCIÓN 9 · MODAL DE CONFIRMACIÓN (showConfirm)
      ============================================ -->
 <div class="modal-overlay hidden" id="confirmModal" data-modal-overlay>
   <div class="modal-content">
     <div class="modal-header">
-      <div class="modal-title" id="confirmTitle">Confirmar</div>
+      <h2 id="confirmTitle">Confirmar</h2>
     </div>
     <div class="modal-body">
-      <p id="confirmMessage"></p>
+      <p id="confirmMessage" style="color: #444; font-size: 14px; line-height: 1.7;"></p>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary btn-sm" data-action="confirm-cancel">Cancelar</button>

@@ -395,3 +395,75 @@
 .utm-list::-webkit-scrollbar-track { background: var(--bg); }
 .utm-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 .utm-list::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ============================================
+   History Toolbar · search + filter chips (Fase 5)
+   ============================================ */
+
+.history-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  align-items: center;
+}
+
+.history-search {
+  position: relative;
+  flex: 1 1 240px;
+  display: flex;
+  align-items: center;
+}
+.history-search > .icon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  pointer-events: none;
+}
+.history-search input {
+  width: 100%;
+  padding: 10px 14px 10px 36px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.history-search input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow-color);
+}
+
+.history-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  letter-spacing: 0.03em;
+  font-family: var(--font-body);
+}
+.filter-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.filter-chip.active {
+  background: var(--accent);
+  color: var(--text-contrast);
+  border-color: var(--accent);
+}

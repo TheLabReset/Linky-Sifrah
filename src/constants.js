@@ -71,4 +71,5 @@ export const STORAGE_KEYS = {
   config: 'linky_sifrah_config',
   history: 'linky_sifrah_history',
   theme: 'linky_sifrah_theme',
+  draft: 'linky_sifrah_draft',
 };

@@ -572,27 +572,4 @@
   line-height: 1.6;
 }
 
-/* --- Help Float Button (botón flotante de ayuda) --- */
-.help-float {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--text-contrast);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-md);
-  cursor: pointer;
-  z-index: 50;
-  transition: var(--transition);
-}
-.help-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 32px var(--glow-color);
-}
 

@@ -15,7 +15,7 @@
  */
 
 import { sanitizeForUTM } from './sanitize.js';
-import { BRAND_PREFIX, DIVISION_MEDIUM_MAP } from './constants.js';
+import { BRAND_PREFIX, DIVISION_MEDIUM_MAP, STORAGE_KEYS } from './constants.js';
 import { $, toast, refreshIcons, uid } from './utils.js';
 
 const UTM_KEYS_TO_STRIP = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
@@ -227,6 +227,9 @@ export function resetForm() {
     const codes = ['ene','feb','mar','abr','may','jun','jul','ago','set','oct','nov','dic'];
     mes.value = codes[new Date().getMonth()] || '';
   }
+
+  // Limpia el borrador persistido también (el usuario eligió empezar de cero)
+  try { localStorage.removeItem(STORAGE_KEYS.draft); } catch {}
 
   toast('Formulario limpio');
 }

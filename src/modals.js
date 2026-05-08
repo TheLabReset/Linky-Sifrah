@@ -1,10 +1,11 @@
 /**
  * Modales (help, config, confirm) · Sifrah.
  *
- * Convenciones SF:
- *  - Cada modal vive bajo un `.modal-overlay` con `id`.
- *  - Visibilidad via clase `.hidden` (NO via `.open` del MVP).
- *  - Cierre por click en el overlay (target === overlay), por X, o por Escape.
+ * Convenciones SF heredadas:
+ *  - Modal de help y confirm viven bajo `.modal-overlay`.
+ *  - Modal de config (más ancho, con tabs) vive bajo `.config-modal-overlay`.
+ *  - Visibilidad via `.hidden` (toggle).
+ *  - Cierre por click en el overlay, X, o Escape.
  *
  * Bug 6 fix: el modal `#confirmModal` se cierra con Escape resolviendo a
  * `false` (cancela) en vez de quedar trabado.
@@ -32,8 +33,8 @@ export function closeHelp() {
    ============================================ */
 
 /**
- * Abre el modal de Ajustes. Recibe un opcional `onOpen` callback para
- * que `config-ui.js` pueda repintar las listas al momento de abrir.
+ * Abre el modal de Ajustes. Recibe un opcional `onOpen` callback para que
+ * `config-ui.js` pueda repintar las listas al momento de abrir.
  * @param {() => void} [onOpen]
  */
 export function openConfigModal(onOpen) {
@@ -48,13 +49,19 @@ export function closeConfigModal() {
   if (m) m.classList.add('hidden');
 }
 
-/** Cambia entre las 3 tabs del config modal: urls / audiencias / formatos. */
+/**
+ * Cambia entre las 3 tabs del config modal: urls / audiencias / formatos.
+ * Adopta el patrón SF: cada tab tiene un `<div id="configTab{Capitalized}">`
+ * y cada botón tiene `data-tab="<key>"`.
+ */
 export function switchConfigTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b) => {
+  document.querySelectorAll('.config-tab-btn').forEach((b) => {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
-  document.querySelectorAll('.tab-content').forEach((c) => {
-    c.classList.toggle('active', c.id === `tab-${tab}`);
+  // SF capitaliza la key en el id: configTabUrls / configTabAudiencias / ...
+  const cap = tab.charAt(0).toUpperCase() + tab.slice(1);
+  document.querySelectorAll('.config-tab-content').forEach((c) => {
+    c.classList.toggle('hidden', c.id !== `configTab${cap}`);
   });
 }
 
@@ -66,13 +73,12 @@ export function switchConfigTab(tab) {
  * Conecta listeners genéricos de modales:
  *  - data-action="open-help" / "open-config"
  *  - data-action="close-modal" + data-modal="<id>"
- *  - data-action="switch-tab" + data-tab="<key>"
+ *  - data-action="switch-config-tab" + data-tab="<key>"
  *  - data-action="confirm-cancel" / "confirm-accept"
- *  - click en overlay cierra el modal correspondiente
+ *  - click en overlay (.modal-overlay o .config-modal-overlay) cierra
  *  - tecla Escape cierra modales abiertos (el confirm resuelve a false)
  *
- * @param {() => void} [onConfigOpen] - callback al abrir el modal de config
- *        (típicamente: re-render de listas desde config-ui.js)
+ * @param {() => void} [onConfigOpen]
  */
 export function setupModalListeners(onConfigOpen) {
   document.body.addEventListener('click', (e) => {
@@ -95,7 +101,7 @@ export function setupModalListeners(onConfigOpen) {
         }
         return;
       }
-      if (action === 'switch-tab') {
+      if (action === 'switch-config-tab') {
         const tab = actionTarget.dataset.tab;
         if (tab) switchConfigTab(tab);
         return;
@@ -110,12 +116,15 @@ export function setupModalListeners(onConfigOpen) {
       }
     }
 
-    // Click directo en el overlay (no en el contenido) cierra
-    if (e.target.classList && e.target.classList.contains('modal-overlay')) {
-      // El confirm modal usa resolveConfirm para limpiar el callback
-      if (e.target.id === 'confirmModal') {
-        resolveConfirm(false);
-      } else {
+    // Click directo en el overlay cierra el modal correspondiente
+    if (e.target.classList) {
+      if (e.target.classList.contains('modal-overlay')) {
+        if (e.target.id === 'confirmModal') {
+          resolveConfirm(false);
+        } else {
+          e.target.classList.add('hidden');
+        }
+      } else if (e.target.classList.contains('config-modal-overlay')) {
         e.target.classList.add('hidden');
       }
     }
