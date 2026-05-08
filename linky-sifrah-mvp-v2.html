@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linky · RESET 2026 Sifrah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+/* =====================================================
+   1. VARIABLES Y TOKENS RESET (replicado de variables.css)
+   ===================================================== */
+:root {
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-neon-green: #00FF85;
+  --color-cyan: #00E5FF;
+  --color-violet: #6F42C1;
+  --color-magenta: #FF0080;
+  --color-gray-dark: #1A1A1A;
+  --color-gray-medium: #333333;
+  --color-gray-light: #AAAAAA;
+  --color-gray-ultra-dark: #0A0A0A;
+
+  --color-success: #00FF85;
+  --color-warning: #FF8800;
+  --color-danger: #FF4444;
+
+  --bg: #000000;
+  --card: #1A1A1A;
+  --card-hover: #222222;
+  --border: #333333;
+  --text: #FFFFFF;
+  --text-contrast: #000000;
+  --muted: #AAAAAA;
+
+  --accent: #00FF85;
+  --accent-hover: #00CC6A;
+  --accent-secondary: #6F42C1;
+  --title-color: #00FF85;
+  --glow-color: rgba(0, 255, 133, 0.2);
+
+  --shadow-sm: 0 4px 16px rgba(0, 255, 133, 0.1);
+  --shadow-md: 0 8px 32px rgba(0, 255, 133, 0.15);
+  --shadow-lg: 0 16px 48px rgba(0, 255, 133, 0.25);
+  --shadow: var(--shadow-sm);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius: var(--radius-md);
+
+  --transition-fast: 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  --transition-base: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  --transition: var(--transition-base);
+
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+
+  --font-display: 'Bebas Neue', 'Anton', sans-serif;
+  --font-body: 'Montserrat', 'Inter', sans-serif;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 24px;
+  --text-2xl: 36px;
+  --text-3xl: 48px;
+}
+
+/* =====================================================
+   2. TEMAS (replicado de themes.css)
+   ===================================================== */
+[data-theme="dark"]   { --accent: #00FF85; --bg: #000000; --card: #1A1A1A; --card-hover: #222222; --border: #333333; --text: #FFFFFF; --muted: #AAAAAA; --text-contrast: #000000; --title-color: #00FF85; --glow-color: rgba(0,255,133,0.2); }
+[data-theme="light"]  { --accent: #00996B; --bg: #F5F5F5; --card: #FFFFFF; --card-hover: #FAFAFA; --border: #E0E0E0; --text: #1A1A1A; --muted: #666666; --text-contrast: #FFFFFF; --title-color: #00996B; --glow-color: rgba(0,153,107,0.2); }
+[data-theme="ocean"]  { --accent: #00B4D8; --bg: #03071E; --card: #0A1628; --card-hover: #0F1F35; --border: #1B3A5C; --text: #CAF0F8; --muted: #7AA4C7; --text-contrast: #03071E; --title-color: #00B4D8; --glow-color: rgba(0,180,216,0.2); }
+[data-theme="forest"] { --accent: #4CAF50; --bg: #0D1F0D; --card: #1A2E1A; --card-hover: #243824; --border: #2D5A2D; --text: #E8F5E9; --muted: #A5C9A5; --text-contrast: #0D1F0D; --title-color: #4CAF50; --glow-color: rgba(76,175,80,0.2); }
+[data-theme="pink"]   { --accent: #D81B60; --bg: #1A0A12; --card: #2D1520; --card-hover: #3D1F2C; --border: #5A2D40; --text: #FCE4EC; --muted: #C49AAB; --text-contrast: #1A0A12; --title-color: #D81B60; --glow-color: rgba(216,27,96,0.2); }
+
+/* =====================================================
+   3. RESET BASE
+   ===================================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: var(--text-base);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+}
+button { font-family: var(--font-body); cursor: pointer; }
+
+/* =====================================================
+   4. LAYOUT
+   ===================================================== */
+.container { max-width: 1200px; margin: 0 auto; padding: var(--space-lg) var(--space-md); }
+
+.header {
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border);
+}
+.header-top { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-md); }
+.brand-title { display: flex; align-items: center; gap: 12px; }
+.brand h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  color: var(--title-color);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-shadow: 0 0 20px var(--glow-color);
+}
+.beta-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--accent);
+  color: var(--text-contrast);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  padding: 4px 9px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-top: 4px;
+  box-shadow: 0 0 12px var(--glow-color);
+  position: relative;
+  top: -2px;
+}
+.brand p {
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.brand p strong { color: var(--text); font-weight: 700; }
+
+/* TOP NAV */
+.top-nav { display: flex; gap: 8px; align-items: center; }
+.nav-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: var(--text-sm); font-weight: 600;
+  transition: var(--transition);
+}
+.nav-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+.theme-toggle { position: relative; }
+.theme-menu {
+  position: absolute; top: calc(100% + 4px); right: 0;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px; min-width: 160px;
+  box-shadow: var(--shadow-md);
+  display: none; z-index: 100;
+}
+.theme-menu.open { display: block; animation: fadeIn 0.15s ease; }
+.theme-option {
+  width: 100%; text-align: left;
+  padding: 8px 12px; background: transparent; border: none;
+  color: var(--text); font-size: var(--text-sm);
+  border-radius: 6px;
+  display: flex; align-items: center; gap: 8px;
+  transition: var(--transition-fast);
+}
+.theme-option:hover { background: var(--card-hover); color: var(--accent); }
+.theme-option.active { color: var(--accent); font-weight: 700; }
+.theme-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-lg);
+}
+@media (max-width: 980px) { .layout { grid-template-columns: 1fr; } }
+
+/* =====================================================
+   5. CARDS
+   ===================================================== */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  animation: fadeInUp 0.5s ease;
+}
+.card-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-sm);
+  border-bottom: 3px solid var(--accent);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+
+/* =====================================================
+   6. FORMS (replicado de forms.css)
+   ===================================================== */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); margin-bottom: var(--space-md); }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--space-md); }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 6px;
+}
+.required-star { color: var(--color-danger); }
+.field-hint { font-size: 11px; color: var(--muted); opacity: 0.8; margin-top: 2px; }
+.auto-badge {
+  display: inline-block;
+  background: var(--glow-color);
+  color: var(--accent);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: var(--text-base);
+  font-family: var(--font-body);
+  outline: none;
+  transition: var(--transition);
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow-color);
+  background: var(--card-hover);
+}
+input[readonly] {
+  background: var(--bg);
+  color: var(--accent);
+  cursor: not-allowed;
+  opacity: 0.85;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+input.error, select.error { border-color: var(--color-danger); box-shadow: 0 0 0 3px rgba(255,68,68,0.15); }
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23AAAAAA' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  padding-right: 40px;
+  cursor: pointer;
+}
+.hidden { display: none !important; }
+.custom-input { margin-top: 8px; animation: slideDown 0.25s ease; }
+.custom-input input { border-style: dashed; border-color: var(--accent); }
+
+/* CONDITIONAL FIELD ANIMATION */
+.conditional-row { animation: slideDown 0.3s ease; }
+
+/* =====================================================
+   7. BUTTONS
+   ===================================================== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+.btn-primary { background: var(--accent); color: var(--text-contrast); }
+.btn-primary:hover:not(:disabled) { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 24px var(--glow-color); }
+.btn-secondary { background: transparent; color: var(--accent); border: 2px solid var(--accent); box-shadow: none; }
+.btn-secondary:hover:not(:disabled) { background: var(--accent); color: var(--text-contrast); }
+.btn-warning { background: var(--color-warning); color: white; }
+.btn-warning:hover:not(:disabled) { background: #cc6a00; }
+.btn-danger { background: var(--color-danger); color: white; }
+.btn-danger:hover:not(:disabled) { background: #cc3636; }
+.btn-excel { background: linear-gradient(135deg, #059669, #047857); color: white; }
+.btn-csv { background: linear-gradient(135deg, #2563EB, #1D4ED8); color: white; }
+.btn-sm { padding: 8px 14px; font-size: 12px; }
+
+.form-actions { display: flex; gap: var(--space-sm); margin-top: var(--space-lg); flex-wrap: wrap; }
+
+/* =====================================================
+   8. RESULT BOX
+   ===================================================== */
+.result-box {
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  margin-top: var(--space-lg);
+  position: relative;
+  animation: fadeIn 0.4s ease;
+}
+.result-final-label {
+  font-family: var(--font-display); font-size: 14px; color: var(--accent);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
+}
+.result-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  word-break: break-all;
+  line-height: 1.7;
+  padding: 12px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 6px;
+}
+.copy-btn {
+  position: absolute; top: var(--space-md); right: var(--space-md);
+  background: var(--accent); color: var(--text-contrast);
+  border: none; padding: 8px 14px; border-radius: 6px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.05em;
+  display: inline-flex; align-items: center; gap: 6px;
+  text-transform: uppercase; cursor: pointer;
+  transition: var(--transition-fast);
+}
+.copy-btn:hover { transform: scale(1.05); }
+.copy-btn.copied { background: var(--color-success); }
+
+/* =====================================================
+   9. STATS GRID
+   ===================================================== */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: var(--space-md); }
+@media (max-width: 700px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-item {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px;
+  text-align: center;
+}
+.stat-item .stat-num {
+  font-family: var(--font-display);
+  font-size: 32px; font-weight: 700;
+  color: var(--accent); line-height: 1;
+}
+.stat-item .stat-label {
+  font-size: 11px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-top: 4px; font-weight: 600;
+}
+
+/* =====================================================
+   10. HISTORY
+   ===================================================== */
+.history-actions { display: flex; gap: 8px; margin-bottom: var(--space-md); flex-wrap: wrap; }
+.utm-list { display: flex; flex-direction: column; gap: 12px; max-height: 600px; overflow-y: auto; }
+.utm-list::-webkit-scrollbar { width: 6px; }
+.utm-list::-webkit-scrollbar-track { background: var(--bg); }
+.utm-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.utm-list::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+.utm-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  transition: var(--transition);
+}
+.utm-item:hover { border-color: var(--accent); transform: translateX(2px); }
+.utm-item.url-ok      { border-left-color: var(--color-success); }
+.utm-item.url-warning { border-left-color: var(--color-warning); }
+.utm-item.url-error   { border-left-color: var(--color-danger); }
+.utm-item.url-checking{ border-left-color: var(--color-cyan); }
+.utm-item.url-unknown { border-left-color: var(--muted); }
+
+.utm-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.utm-campaign {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 700;
+  color: var(--accent);
+  word-break: break-all; flex: 1;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+}
+.url-status-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.url-status-badge.checking { background: rgba(0, 229, 255, 0.15); color: var(--color-cyan); }
+.url-status-badge.ok       { background: rgba(0, 255, 133, 0.15); color: var(--color-success); }
+.url-status-badge.warning  { background: rgba(255, 136, 0, 0.15); color: var(--color-warning); }
+.url-status-badge.error    { background: rgba(255, 68, 68, 0.15); color: var(--color-danger); }
+.url-status-badge.unknown  { background: rgba(170, 170, 170, 0.15); color: var(--muted); }
+
+.utm-actions { display: flex; gap: 4px; }
+.utm-action-btn {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text); padding: 4px 8px; border-radius: 4px;
+  font-size: 11px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px;
+  transition: var(--transition-fast);
+}
+.utm-action-btn:hover { border-color: var(--accent); color: var(--accent); }
+.utm-action-btn.delete:hover { border-color: var(--color-danger); color: var(--color-danger); }
+.utm-date { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.utm-url { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); word-break: break-all; line-height: 1.5; }
+
+.empty-state { text-align: center; padding: var(--space-xl) var(--space-md); color: var(--muted); }
+.empty-state svg { width: 48px; height: 48px; opacity: 0.4; margin-bottom: 12px; }
+.empty-state h3 { font-family: var(--font-display); font-size: 20px; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.05em; }
+.empty-state p { font-size: 13px; }
+
+/* =====================================================
+   11. MODALS
+   ===================================================== */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none; justify-content: center; align-items: center;
+  z-index: 1000;
+  padding: var(--space-md);
+}
+.modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-lg);
+  max-width: 700px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.25s ease;
+}
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border);
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 24px; color: var(--accent);
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.modal-close {
+  background: transparent; border: none; color: var(--muted);
+  font-size: 24px; cursor: pointer; padding: 4px;
+  line-height: 1; transition: var(--transition-fast);
+}
+.modal-close:hover { color: var(--color-danger); transform: rotate(90deg); }
+.modal-body { padding: var(--space-lg); }
+.modal-footer {
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: flex-end; gap: 8px;
+}
+
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: var(--space-md); }
+.tab-btn {
+  background: transparent; border: none; color: var(--muted);
+  padding: 10px 18px; cursor: pointer;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  transition: var(--transition-fast);
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.2s; }
+
+.config-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: var(--space-md); }
+.config-item {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px;
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+}
+.config-item-info { flex: 1; min-width: 0; }
+.config-item-info strong { display: block; color: var(--text); margin-bottom: 2px; word-break: break-word; }
+.config-item-info small { color: var(--muted); font-size: 11px; word-break: break-all; }
+.config-add { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; align-items: end; }
+@media (max-width: 600px) { .config-add { grid-template-columns: 1fr; } }
+.is-core-badge {
+  display: inline-block; background: var(--glow-color); color: var(--accent);
+  font-size: 9px; padding: 2px 6px; border-radius: 4px; margin-left: 6px;
+  font-weight: 700; letter-spacing: 0.05em;
+}
+
+/* HELP MODAL CONTENT */
+.help-section { margin-bottom: var(--space-md); }
+.help-section h4 {
+  font-family: var(--font-display); color: var(--accent);
+  font-size: 18px; margin-bottom: 8px; letter-spacing: 0.05em;
+  display: flex; align-items: center; gap: 8px;
+}
+.help-section p { font-size: 13px; color: var(--muted); margin-bottom: 8px; line-height: 1.7; }
+.help-section ul { padding-left: 20px; margin-bottom: 8px; }
+.help-section li { font-size: 13px; color: var(--muted); margin-bottom: 4px; line-height: 1.6; }
+.help-section code {
+  background: var(--bg); border: 1px solid var(--border);
+  padding: 2px 6px; border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--accent);
+}
+.example-utm {
+  background: var(--bg); border-left: 3px solid var(--accent);
+  padding: 10px 12px; border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text); word-break: break-all;
+  margin: 8px 0; line-height: 1.6;
+}
+.warning-box {
+  background: rgba(255, 136, 0, 0.08);
+  border-left: 3px solid var(--color-warning);
+  padding: 10px 14px; border-radius: 4px;
+  font-size: 12px; color: var(--text);
+  margin: 8px 0;
+}
+.tip-box {
+  background: rgba(0, 255, 133, 0.06);
+  border-left: 3px solid var(--accent);
+  padding: 10px 14px; border-radius: 4px;
+  font-size: 12px; color: var(--text);
+  margin: 8px 0;
+}
+
+/* HELP FLOAT BUTTON */
+.help-float {
+  position: fixed; bottom: 24px; right: 24px;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--accent); color: var(--text-contrast);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-md);
+  cursor: pointer; z-index: 50;
+  transition: var(--transition);
+}
+.help-float:hover { transform: scale(1.1); box-shadow: 0 12px 32px var(--glow-color); }
+
+/* =====================================================
+   12. TOAST
+   ===================================================== */
+.toast {
+  position: fixed; bottom: 90px; right: 24px;
+  background: var(--card-hover); border: 1px solid var(--accent);
+  color: var(--text);
+  padding: 12px 18px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600;
+  box-shadow: var(--shadow-md);
+  display: flex; align-items: center; gap: 8px;
+  z-index: 2000;
+  animation: slideUp 0.25s ease;
+  max-width: 320px;
+  transition: opacity 0.3s ease;
+}
+.toast.error { border-color: var(--color-danger); }
+.toast.warning { border-color: var(--color-warning); }
+.toast.success { border-color: var(--color-success); }
+
+/* =====================================================
+   13. INFO STRIP
+   ===================================================== */
+.info-strip {
+  background: var(--glow-color);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: var(--space-md);
+  font-size: 12px;
+  color: var(--text);
+  display: flex; align-items: center; gap: 10px;
+}
+.info-strip svg { color: var(--accent); flex-shrink: 0; }
+
+/* =====================================================
+   15. FOOTER
+   ===================================================== */
+.footer {
+  text-align: center; padding: var(--space-lg) 0 var(--space-md);
+  color: var(--muted); font-size: 12px;
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-xl);
+}
+.footer strong { color: var(--accent); }
+
+/* =====================================================
+   16. ANIMATIONS
+   ===================================================== */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp  { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown{ from { opacity: 0; transform: translateY(-10px); max-height: 0; } to { opacity: 1; transform: translateY(0); max-height: 200px; } }
+
+/* ICON HELPER */
+.icon { width: 16px; height: 16px; }
+.icon-lg { width: 20px; height: 20px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+  <header class="header">
+    <div class="header-top">
+      <div class="brand">
+        <div class="brand-title">
+          <h1>LINKY</h1>
+          <span class="beta-badge">BETA</span>
+        </div>
+        <p>RESET — <strong>Sifrah</strong></p>
+      </div>
+      <nav class="top-nav">
+        <button class="nav-btn" onclick="openConfigModal()" title="Ajustes">
+          <i data-lucide="settings" class="icon"></i> Ajustes
+        </button>
+        <div class="theme-toggle">
+          <button class="nav-btn" onclick="toggleThemeMenu()" title="Cambiar tema">
+            <i data-lucide="palette" class="icon"></i> Tema
+          </button>
+          <div class="theme-menu" id="themeMenu">
+            <button class="theme-option" data-theme="dark"   onclick="changeTheme('dark')"><span class="theme-dot" style="background:#00FF85"></span>Dark</button>
+            <button class="theme-option" data-theme="light"  onclick="changeTheme('light')"><span class="theme-dot" style="background:#00996B"></span>Light</button>
+            <button class="theme-option" data-theme="ocean"  onclick="changeTheme('ocean')"><span class="theme-dot" style="background:#00B4D8"></span>Ocean</button>
+            <button class="theme-option" data-theme="forest" onclick="changeTheme('forest')"><span class="theme-dot" style="background:#4CAF50"></span>Forest</button>
+            <button class="theme-option" data-theme="pink"   onclick="changeTheme('pink')"><span class="theme-dot" style="background:#D81B60"></span>Pink</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =====================================================
+       LAYOUT: FORM (left) + HISTORY (right)
+       ===================================================== -->
+  <div class="layout">
+
+    <!-- ========= COLUMNA IZQUIERDA: FORM + RESULT ========= -->
+    <div class="col-left">
+
+      <div class="card">
+        <div class="card-title">
+          <i data-lucide="puzzle" class="icon-lg"></i>
+          Crear nueva UTM
+        </div>
+
+        <div class="info-strip">
+          <i data-lucide="sparkles" class="icon"></i>
+          <span>Linky limpia automáticamente tildes, ñ, espacios y caracteres especiales para que la UTM nunca se rompa.</span>
+        </div>
+
+        <form id="utmForm" autocomplete="off">
+
+          <!-- URL DE DESTINO -->
+          <div class="form-group full">
+            <label>URL de destino <span class="required-star">*</span></label>
+            <select id="urlDestino" required>
+              <option value="">Seleccionar URL...</option>
+            </select>
+            <input id="urlCustom" class="hidden custom-input" type="url" placeholder="https://sifrah.com/...">
+          </div>
+
+          <!-- DIVISIÓN + PLATAFORMA -->
+          <div class="form-row">
+            <div class="form-group">
+              <label>División <span class="required-star">*</span></label>
+              <select id="division" required>
+                <option value="">Seleccionar...</option>
+                <option value="branding">Branding</option>
+                <option value="retail">Retail</option>
+                <option value="ecom">Ecommerce</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Plataforma <span class="required-star">*</span></label>
+              <select id="plataforma" required>
+                <option value="">Seleccionar...</option>
+                <option value="facebook">Meta (FB / IG)</option>
+                <option value="google">Google</option>
+                <option value="tiktok">TikTok</option>
+                <option value="youtube">YouTube</option>
+                <option value="custom">+ Personalizada</option>
+              </select>
+              <input id="plataformaCustom" class="hidden custom-input" type="text" placeholder="ej: pinterest, linkedin">
+            </div>
+          </div>
+
+          <!-- MEDIUM AUTO + OBJETIVO -->
+          <div class="form-row">
+            <div class="form-group">
+              <label>Medium <span class="auto-badge">AUTO</span></label>
+              <input id="medium" type="text" readonly placeholder="Se genera según división">
+              <span class="field-hint">Branding y Retail → social-media · Ecom → social-ads</span>
+            </div>
+            <div class="form-group">
+              <label>Objetivo <span class="required-star">*</span></label>
+              <select id="objetivo" required>
+                <option value="">Seleccionar...</option>
+                <option value="alc">Alcance</option>
+                <option value="rpr">Reproducciones</option>
+                <option value="traf">Tráfico</option>
+                <option value="conv">Conversiones</option>
+              </select>
+              <span class="field-hint">En la UTM se abrevia (alc, rpr, traf, conv)</span>
+            </div>
+          </div>
+
+          <!-- AUDIENCIA (CONDICIONAL: SOLO ECOM) -->
+          <div id="audienciaGroup" class="form-group hidden conditional-row">
+            <label>Audiencia <span class="required-star">*</span></label>
+            <select id="audiencia">
+              <option value="">Seleccionar...</option>
+            </select>
+            <input id="audienciaCustom" class="hidden custom-input" type="text" placeholder="ej: pmax, sem">
+            <span class="field-hint">Solo aplica a Ecommerce</span>
+          </div>
+
+          <!-- FORMATO + TEMA -->
+          <div class="form-row">
+            <div class="form-group">
+              <label>Formato <span class="required-star">*</span></label>
+              <input id="formato" type="text" list="formatList" placeholder="ej: carrusel, video, reel...">
+              <datalist id="formatList"></datalist>
+              <span class="field-hint">Sugerencias automáticas mientras escribes</span>
+            </div>
+            <div class="form-group">
+              <label>Tema / Producto <span class="required-star">*</span></label>
+              <input id="tema" type="text" placeholder="ej: nueva colección love boho, bisutería, 30 off">
+              <span class="field-hint">Campo libre · se sanitiza automáticamente</span>
+            </div>
+          </div>
+
+          <!-- MES + AÑO -->
+          <div class="form-row">
+            <div class="form-group">
+              <label>Mes <span class="required-star">*</span></label>
+              <select id="mes" required>
+                <option value="">Seleccionar...</option>
+                <option value="ene">Enero</option>
+                <option value="feb">Febrero</option>
+                <option value="mar">Marzo</option>
+                <option value="abr">Abril</option>
+                <option value="may">Mayo</option>
+                <option value="jun">Junio</option>
+                <option value="jul">Julio</option>
+                <option value="ago">Agosto</option>
+                <option value="set">Setiembre</option>
+                <option value="oct">Octubre</option>
+                <option value="nov">Noviembre</option>
+                <option value="dic">Diciembre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Año <span class="required-star">*</span></label>
+              <select id="ano" required></select>
+              <span class="field-hint">Va al utm_content abreviado a 2 dígitos (ej: 26)</span>
+            </div>
+          </div>
+
+          <!-- VERSIÓN -->
+          <div class="form-group">
+            <label>Número de versión <span class="auto-badge">OPCIONAL</span></label>
+            <input id="version" type="number" min="1" max="99" placeholder="Solo si hay variantes creativas (1, 2, 3...)">
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <i data-lucide="rocket" class="icon"></i> Generar UTM
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+              <i data-lucide="refresh-cw" class="icon"></i> Limpiar
+            </button>
+          </div>
+        </form>
+
+        <!-- RESULT BOX -->
+        <div id="resultContainer" class="hidden">
+          <div class="result-box">
+            <button class="copy-btn" id="copyBtn" onclick="copyResult()">
+              <i data-lucide="clipboard-copy" class="icon"></i> Copiar
+            </button>
+            <div class="result-final-label">URL final etiquetada</div>
+            <div id="resultText" class="result-text"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========= COLUMNA DERECHA: HISTORIAL ========= -->
+    <div class="col-right">
+
+      <div class="card">
+        <div class="card-title">
+          <i data-lucide="bar-chart-2" class="icon-lg"></i>
+          Historial
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-item"><div class="stat-num" id="totalCount">0</div><div class="stat-label">Total</div></div>
+          <div class="stat-item"><div class="stat-num" id="brandingCount">0</div><div class="stat-label">Branding</div></div>
+          <div class="stat-item"><div class="stat-num" id="retailCount">0</div><div class="stat-label">Retail</div></div>
+          <div class="stat-item"><div class="stat-num" id="ecomCount">0</div><div class="stat-label">Ecom</div></div>
+        </div>
+
+        <div class="history-actions">
+          <button class="btn btn-csv btn-sm" onclick="exportCSV()">
+            <i data-lucide="download" class="icon"></i> CSV
+          </button>
+          <button class="btn btn-excel btn-sm" onclick="exportExcel()">
+            <i data-lucide="file-spreadsheet" class="icon"></i> Excel
+          </button>
+          <button class="btn btn-danger btn-sm" onclick="clearHistory()">
+            <i data-lucide="trash-2" class="icon"></i> Limpiar
+          </button>
+        </div>
+
+        <div id="utmList" class="utm-list"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+  <footer class="footer">
+    <p>Linky · <strong>RESET</strong> 2026 · The Lab · MVP Sifrah v0.1</p>
+  </footer>
+
+</div>
+
+<!-- =====================================================
+     HELP FLOAT BUTTON
+     ===================================================== -->
+<button class="help-float" onclick="openHelp()" title="Ayuda">
+  <i data-lucide="help-circle" class="icon-lg"></i>
+</button>
+
+<!-- =====================================================
+     MODAL: HELP
+     ===================================================== -->
+<div class="modal-overlay" id="helpModal" onclick="if(event.target===this)closeHelp()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📖 Guía rápida</div>
+      <button class="modal-close" onclick="closeHelp()">×</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="help-section">
+        <h4><i data-lucide="target" class="icon"></i> Estructura de la UTM Sifrah</h4>
+        <p>Cada UTM se compone de 4 parámetros estandarizados según las reglas del equipo:</p>
+        <ul>
+          <li><code>utm_campaign</code> = <code>sifrah-{mes}-{división}</code></li>
+          <li><code>utm_medium</code> = <code>social-media</code> (Branding/Retail) o <code>social-ads</code> (Ecom)</li>
+          <li><code>utm_source</code> = la plataforma (facebook, google, tiktok, youtube)</li>
+          <li><code>utm_content</code> = <code>sifrah-{mes}-{año}-{división}-{detalle táctico}</code></li>
+        </ul>
+        <p>El año va abreviado a 2 dígitos solo en utm_content para poder filtrar por mes específico de un año específico (ej: <code>may-26</code>).</p>
+      </div>
+
+      <div class="help-section">
+        <h4><i data-lucide="lightbulb" class="icon"></i> Ejemplos por división</h4>
+        <p><strong>Branding:</strong> alcance o reproducciones, formato + tema</p>
+        <div class="example-utm">sifrah-may-26-branding-alc-video-lanzamiento-club-brillo</div>
+
+        <p><strong>Retail:</strong> alcance o tráfico, formato + tema/promo</p>
+        <div class="example-utm">sifrah-may-26-retail-traf-estatico-30-off-verano-2</div>
+
+        <p><strong>Ecom (con audiencia):</strong> conversiones, audiencia + formato + tema</p>
+        <div class="example-utm">sifrah-may-26-ecom-conv-lal-carrusel-coleccion-love-boho-1</div>
+      </div>
+
+      <div class="help-section">
+        <h4><i data-lucide="search" class="icon"></i> Cómo filtrar en GA4</h4>
+        <p>Usa <code>Adquisición → Tráfico de adquisición</code> y filtra por:</p>
+        <ul>
+          <li>Por mes y año (Linky): <code>utm_content</code> contiene <code>-may-26-</code></li>
+          <li>Por año completo: <code>utm_content</code> contiene <code>-26-</code></li>
+          <li>Por división: <code>utm_campaign</code> termina con <code>-ecom</code> / <code>-branding</code> / <code>-retail</code></li>
+          <li>Por plataforma: <code>utm_source</code> es exactamente <code>facebook</code></li>
+          <li>Por audiencia (solo Ecom): <code>utm_content</code> contiene <code>-lal-</code></li>
+        </ul>
+      </div>
+
+      <div class="tip-box">
+        <strong>💡 Tip:</strong> el campo Tema acepta texto libre. Linky limpia automáticamente las tildes, la ñ, los espacios (los convierte en guiones) y los caracteres especiales para que la UTM nunca se rompa.
+      </div>
+
+      <div class="warning-box">
+        <strong>⚠️ Importante:</strong> los datos del historial se guardan localmente en este navegador. Si limpias el caché, se pierden. Usa <strong>Exportar CSV</strong> regularmente para backup.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================
+     MODAL: CONFIG
+     ===================================================== -->
+<div class="modal-overlay" id="configModal" onclick="if(event.target===this)closeConfigModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">⚙ Ajustes</div>
+      <button class="modal-close" onclick="closeConfigModal()">×</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="urls" onclick="switchConfigTab('urls')">URLs</button>
+        <button class="tab-btn" data-tab="audiencias" onclick="switchConfigTab('audiencias')">Audiencias</button>
+        <button class="tab-btn" data-tab="formatos" onclick="switchConfigTab('formatos')">Formatos sugeridos</button>
+      </div>
+
+      <!-- TAB URLs -->
+      <div class="tab-content active" id="tab-urls">
+        <p style="color: var(--muted); font-size: 13px; margin-bottom: var(--space-md);">
+          Gestiona las URLs frecuentes que aparecen en el dropdown del formulario.
+        </p>
+        <div class="config-list" id="urlsList"></div>
+        <div class="config-add">
+          <div>
+            <label style="font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px;">Etiqueta</label>
+            <input type="text" id="newUrlLabel" placeholder="ej: Colección Pets">
+          </div>
+          <div>
+            <label style="font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px;">URL</label>
+            <input type="url" id="newUrlValue" placeholder="https://sifrah.com/...">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addURL()"><i data-lucide="plus" class="icon"></i> Agregar</button>
+        </div>
+      </div>
+
+      <!-- TAB AUDIENCIAS -->
+      <div class="tab-content" id="tab-audiencias">
+        <p style="color: var(--muted); font-size: 13px; margin-bottom: var(--space-md);">
+          Gestiona las audiencias disponibles para campañas Ecom.
+        </p>
+        <div class="config-list" id="audienciasList"></div>
+        <div class="config-add">
+          <div>
+            <label style="font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px;">Etiqueta</label>
+            <input type="text" id="newAudLabel" placeholder="ej: Performance Max">
+          </div>
+          <div>
+            <label style="font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px;">Valor en UTM</label>
+            <input type="text" id="newAudValue" placeholder="ej: pmax">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addAudience()"><i data-lucide="plus" class="icon"></i> Agregar</button>
+        </div>
+      </div>
+
+      <!-- TAB FORMATOS -->
+      <div class="tab-content" id="tab-formatos">
+        <p style="color: var(--muted); font-size: 13px; margin-bottom: var(--space-md);">
+          Sugerencias de formato que aparecen como autocompletado en el campo Formato.
+        </p>
+        <div class="config-list" id="formatosList"></div>
+        <div class="config-add">
+          <div style="grid-column: 1 / 3;">
+            <label style="font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px;">Formato</label>
+            <input type="text" id="newFormato" placeholder="ej: short, vertical-video">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addFormato()"><i data-lucide="plus" class="icon"></i> Agregar</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="resetConfig()">
+        <i data-lucide="refresh-cw" class="icon"></i> Restaurar defaults
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================
+     MODAL: CONFIRM CUSTOM
+     ===================================================== -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width: 440px;">
+    <div class="modal-header">
+      <div class="modal-title" id="confirmTitle">Confirmar</div>
+    </div>
+    <div class="modal-body">
+      <p id="confirmMessage" style="color: var(--muted); font-size: 14px; line-height: 1.7;"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="resolveConfirm(false)">Cancelar</button>
+      <button class="btn btn-danger btn-sm" id="confirmAcceptBtn" onclick="resolveConfirm(true)">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   ============= LINKY SIFRAH · MVP v0.1 ===============
+   =====================================================
+   Estructura:
+   1. CONSTANTS & CATALOGS
+   2. STATE & STORAGE
+   3. UTILS
+   4. SANITIZATION
+   5. URL HANDLING
+   6. FORM
+   7. UTM GENERATION
+   8. HISTORY
+   9. EXPORT
+   10. THEME
+   11. MODALS
+   12. CONFIG MANAGEMENT
+   13. INITIALIZATION
+   ===================================================== */
+
+
+/* =====================================================
+   1. CONSTANTS & CATALOGS
+   ===================================================== */
+
+// Mapeo de plataforma → utm_source
+const PLATFORM_MAP = {
+  facebook: 'facebook',
+  google:   'google',
+  tiktok:   'tiktok',
+  youtube:  'youtube'
+};
+
+// Mapeo de objetivo → abreviatura UTM
+const OBJ_MAP = {
+  alc:  'alc',
+  rpr:  'rpr',
+  traf: 'traf',
+  conv: 'conv'
+};
+
+// Mapeo de división → utm_medium (regla automática Sifrah)
+const DIVISION_MEDIUM_MAP = {
+  branding: 'social-media',
+  retail:   'social-media',
+  ecom:     'social-ads'
+};
+
+// Catálogos seed (modificables por modal de Ajustes)
+function getDefaultConfig() {
+  return {
+    urls: [
+      { id: 'url_1', label: 'Home',                  url: 'https://sifrah.com/',                                              isCore: true },
+      { id: 'url_2', label: 'Nuestras tiendas',      url: 'https://sifrah.com/pages/nuestras-tiendas',                        isCore: true },
+      { id: 'url_3', label: 'Nueva colección',       url: 'https://sifrah.com/collections/nueva-coleccion',                   isCore: true },
+      { id: 'url_4', label: 'Bisutería',             url: 'https://sifrah.com/collections/bisuteria',                         isCore: true },
+      { id: 'url_5', label: 'Bolsos y carteras',     url: 'https://sifrah.com/collections/bolsos-y-carteras-para-mujer',      isCore: true },
+      { id: 'url_6', label: 'Accesorios de cabello', url: 'https://sifrah.com/collections/accesorios-de-cabello',             isCore: true },
+      { id: 'url_7', label: 'Ofertas Sifrah',        url: 'https://sifrah.com/collections/ofertas-sifrah',                    isCore: true }
+    ],
+    audiencias: [
+      { id: 'aud_1', label: 'Lookalike (LAL)',     value: 'lal',       isCore: true },
+      { id: 'aud_2', label: 'Base de datos (BBDD)', value: 'bbdd',     isCore: true },
+      { id: 'aud_3', label: 'Advantage+',          value: 'advantage', isCore: true },
+      { id: 'aud_4', label: 'Intereses',           value: 'intereses', isCore: true },
+      { id: 'aud_5', label: 'Remarketing (RMKT)',  value: 'rmkt',      isCore: true }
+    ],
+    formatos: ['carrusel', 'video', 'reel', 'estatico', 'collection', 'ppl', 'link', 'story', 'imagen']
+  };
+}
+
+const VERSION_TAG = 'v0.1';
+
+
+/* =====================================================
+   2. STATE & STORAGE
+   ===================================================== */
+
+const state = {
+  config: null,
+  history: [],
+  currentTheme: 'dark',
+  confirmCallback: null
+};
+
+function loadConfig() {
+  try {
+    const stored = localStorage.getItem('linky_sifrah_config');
+    if (stored) {
+      state.config = JSON.parse(stored);
+      // Merge con defaults para nuevas keys
+      const def = getDefaultConfig();
+      Object.keys(def).forEach(k => { if (!state.config[k]) state.config[k] = def[k]; });
+    } else {
+      state.config = getDefaultConfig();
+      saveConfig();
+    }
+  } catch (e) {
+    state.config = getDefaultConfig();
+  }
+}
+
+function saveConfig() {
+  localStorage.setItem('linky_sifrah_config', JSON.stringify(state.config));
+}
+
+function loadHistory() {
+  try { state.history = JSON.parse(localStorage.getItem('linky_sifrah_history') || '[]'); }
+  catch (e) { state.history = []; }
+}
+
+function saveHistory() {
+  localStorage.setItem('linky_sifrah_history', JSON.stringify(state.history));
+}
+
+
+/* =====================================================
+   3. UTILS
+   ===================================================== */
+
+const $ = (id) => document.getElementById(id);
+
+function toast(msg, type = '') {
+  const t = document.createElement('div');
+  t.className = 'toast' + (type ? ' ' + type : '');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => {
+    t.style.opacity = '0';
+    setTimeout(() => t.remove(), 300);
+  }, 2500);
+}
+
+function escapeHTML(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function uid(prefix = 'id') {
+  return prefix + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+function refreshIcons() {
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+// Modal de confirmación custom (reemplaza confirm() nativo)
+function showConfirm(message, title = 'Confirmar', acceptLabel = 'Confirmar', danger = true) {
+  return new Promise((resolve) => {
+    $('confirmTitle').textContent = title;
+    $('confirmMessage').textContent = message;
+    const acceptBtn = $('confirmAcceptBtn');
+    acceptBtn.textContent = acceptLabel;
+    acceptBtn.className = 'btn btn-sm ' + (danger ? 'btn-danger' : 'btn-primary');
+    state.confirmCallback = resolve;
+    $('confirmModal').classList.add('open');
+  });
+}
+
+function resolveConfirm(value) {
+  $('confirmModal').classList.remove('open');
+  if (state.confirmCallback) {
+    state.confirmCallback(value);
+    state.confirmCallback = null;
+  }
+}
+
+
+/* =====================================================
+   4. SANITIZATION
+   ===================================================== */
+
+// Sanitización en vivo (durante typing) — NO trimea guiones al final
+// para que el usuario pueda seguir escribiendo después de un espacio.
+function sanitizeLive(str) {
+  if (!str && str !== 0) return '';
+  return String(str)
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')  // tildes y diacríticos
+    .replace(/ñ/g, 'n')
+    .replace(/[\u{1F300}-\u{1FAFF}\u{1F600}-\u{1F64F}\u{2600}-\u{27BF}]/gu, '')  // emojis
+    .replace(/[“”‘’]/g, '')          // comillas tipográficas
+    .replace(/[—–]/g, '-')            // guiones largos → guion normal
+    .replace(/[^a-z0-9\s-]/g, '')   // solo alfanum, espacios, guiones
+    .replace(/\s+/g, '-')           // espacios → guiones
+    .replace(/-{2,}/g, '-');        // guiones repetidos → uno
+}
+
+// Sanitización final (al construir la UTM) — sí trimea guiones
+function sanitizeForUTM(str) {
+  return sanitizeLive(str).replace(/^-+|-+$/g, '');
+}
+
+// Detecta qué tipo de transformación se aplicó (para toast contextual)
+function describeChanges(original, cleaned) {
+  if (original === cleaned) return [];
+  const messages = [];
+  if (/[A-Z]/.test(original)) messages.push('mayúsculas → minúsculas');
+  if (/[áéíóúÁÉÍÓÚ]/.test(original)) messages.push('tildes removidas');
+  if (/[ñÑ]/.test(original)) messages.push('ñ → n');
+  if (/\s/.test(original)) messages.push('espacios → guion');
+  if (/[“”‘’]/.test(original)) messages.push('comillas tipográficas eliminadas');
+  if (/[—–]/.test(original)) messages.push('guion largo → guion normal');
+  if (/[\u{1F300}-\u{1FAFF}\u{1F600}-\u{1F64F}\u{2600}-\u{27BF}]/u.test(original)) messages.push('emojis eliminados');
+  if (/[¿¡´`!@#$%^&*()+=\[\]{};:'",.<>?\/\\|~×]/.test(original)) messages.push('caracteres especiales eliminados');
+  return messages;
+}
+
+// Throttle del toast para evitar spam
+let lastCleanupToast = 0;
+function showCleanupToast(messages) {
+  const now = Date.now();
+  if (now - lastCleanupToast < 1200) return;  // throttle 1.2s
+  if (messages.length === 0) return;
+  lastCleanupToast = now;
+  toast(messages.join(' · '), 'warning');
+}
+
+// Limpieza inline en vivo durante typing — modifica el campo y preserva el caret
+function cleanInputLive(e) {
+  const input = e.target;
+  const val = input.value;
+  const cleaned = sanitizeLive(val);
+  if (val === cleaned) return;
+
+  const start = input.selectionStart;
+  const lengthDiff = val.length - cleaned.length;
+
+  input.value = cleaned;
+
+  // Reposiciona el caret considerando los chars eliminados
+  const newPos = Math.max(0, start - lengthDiff);
+  try { input.setSelectionRange(newPos, newPos); } catch (err) { /* algunos types no lo soportan */ }
+
+  // Toast contextual (con throttle)
+  showCleanupToast(describeChanges(val, cleaned));
+
+  // Disparar input event para que el preview se actualice
+  input.dispatchEvent(new Event('change', { bubbles: false }));
+}
+
+
+/* =====================================================
+   5. URL HANDLING
+   ===================================================== */
+
+// Parsea URL, strippea utm_* preexistentes, preserva fragment
+function parseAndCleanURL(rawUrl) {
+  try {
+    const u = new URL(rawUrl);
+    // Strip de utm_* preexistentes
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(k => u.searchParams.delete(k));
+    return {
+      ok: true,
+      origin: u.origin,
+      pathname: u.pathname,
+      search: u.search,
+      hash: u.hash,
+      href: u.toString()
+    };
+  } catch (e) {
+    return { ok: false, error: 'URL inválida' };
+  }
+}
+
+// Construye URL final etiquetada manejando fragments y querystrings
+function buildFinalURL(rawUrl, params) {
+  const parsed = parseAndCleanURL(rawUrl);
+  if (!parsed.ok) return null;
+
+  const u = new URL(parsed.href);
+  Object.entries(params).forEach(([k, v]) => { if (v) u.searchParams.set(k, v); });
+  return u.toString();
+}
+
+// Verificación de URL (HEAD → GET fallback). Mejorada: CORS = 'unknown' (no 'ok')
+async function checkURL(url) {
+  const TIMEOUT = 8000;
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), TIMEOUT);
+    const r = await fetch(url, { method: 'HEAD', signal: ctrl.signal, redirect: 'follow' });
+    clearTimeout(t);
+    if (r.ok)               return { status: 'ok',      code: r.status, message: 'URL accesible' };
+    if (r.status >= 300 && r.status < 400) return { status: 'warning', code: r.status, message: 'Redirect detectado' };
+    return { status: 'error', code: r.status, message: `Error HTTP ${r.status}` };
+  } catch (err) {
+    if (err.name === 'AbortError') return { status: 'error', code: 'TIMEOUT', message: 'Timeout (>8s)' };
+    // Fallback GET
+    try {
+      const ctrl2 = new AbortController();
+      const t2 = setTimeout(() => ctrl2.abort(), TIMEOUT);
+      const r2 = await fetch(url, { method: 'GET', signal: ctrl2.signal, redirect: 'follow', mode: 'no-cors' });
+      clearTimeout(t2);
+      if (r2.ok || r2.status === 0) return { status: 'ok', code: r2.status || 200, message: 'URL accesible' };
+      return { status: 'error', code: r2.status, message: `Error HTTP ${r2.status}` };
+    } catch (err2) {
+      // CORS bloqueó: marcar como 'unknown' (no asumir 'ok' silenciosamente)
+      return { status: 'unknown', code: 'CORS', message: 'No verificable (CORS)' };
+    }
+  }
+}
+
+
+/* =====================================================
+   6. FORM
+   ===================================================== */
+
+function populateYearSelect() {
+  const sel = $('ano');
+  const cur = new Date().getFullYear();
+  sel.innerHTML = '';
+  [-1, 0, 1, 2].forEach(off => {
+    const y = cur + off;
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y;
+    if (off === 0) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function populateMonthDefault() {
+  const m = new Date().getMonth();
+  const codes = ['ene','feb','mar','abr','may','jun','jul','ago','set','oct','nov','dic'];
+  $('mes').value = codes[m];
+}
+
+function populateURLsSelect() {
+  const sel = $('urlDestino');
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Seleccionar URL...</option>';
+  state.config.urls.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u.url; opt.textContent = u.label;
+    sel.appendChild(opt);
+  });
+  const custom = document.createElement('option');
+  custom.value = 'custom'; custom.textContent = '+ URL personalizada';
+  sel.appendChild(custom);
+  if (current) sel.value = current;
+}
+
+function populateAudienciasSelect() {
+  const sel = $('audiencia');
+  sel.innerHTML = '<option value="">Seleccionar...</option>';
+  state.config.audiencias.forEach(a => {
+    const opt = document.createElement('option');
+    opt.value = a.value; opt.textContent = a.label;
+    sel.appendChild(opt);
+  });
+  const custom = document.createElement('option');
+  custom.value = 'custom'; custom.textContent = '+ Personalizada';
+  sel.appendChild(custom);
+}
+
+function populateFormatList() {
+  const list = $('formatList');
+  list.innerHTML = '';
+  state.config.formatos.forEach(f => {
+    const opt = document.createElement('option');
+    opt.value = f;
+    list.appendChild(opt);
+  });
+}
+
+function setupFormListeners() {
+
+  // URL: toggle custom
+  $('urlDestino').addEventListener('change', e => {
+    $('urlCustom').classList.toggle('hidden', e.target.value !== 'custom');
+    if (e.target.value !== 'custom') $('urlCustom').value = '';
+  });
+
+  // División: auto-fill medium + toggle audiencia
+  $('division').addEventListener('change', e => {
+    const div = e.target.value;
+    $('medium').value = DIVISION_MEDIUM_MAP[div] || '';
+    const isEcom = div === 'ecom';
+    $('audienciaGroup').classList.toggle('hidden', !isEcom);
+    if (!isEcom) {
+      $('audiencia').value = '';
+      $('audienciaCustom').value = '';
+      $('audienciaCustom').classList.add('hidden');
+    }
+  });
+
+  // Plataforma: toggle custom
+  $('plataforma').addEventListener('change', e => {
+    $('plataformaCustom').classList.toggle('hidden', e.target.value !== 'custom');
+    if (e.target.value !== 'custom') $('plataformaCustom').value = '';
+  });
+
+  // Audiencia: toggle custom
+  $('audiencia').addEventListener('change', e => {
+    $('audienciaCustom').classList.toggle('hidden', e.target.value !== 'custom');
+    if (e.target.value !== 'custom') $('audienciaCustom').value = '';
+  });
+
+  // === LIMPIEZA EN VIVO ===
+  // Aplicar a campos cuyo valor va directo a la UTM
+  ['tema', 'formato', 'plataformaCustom', 'audienciaCustom'].forEach(id => {
+    $(id).addEventListener('input', cleanInputLive);
+  });
+
+  // Submit
+  $('utmForm').addEventListener('submit', generateUTM);
+}
+
+// Cierra menu de tema al click fuera
+document.addEventListener('click', (e) => {
+  const menu = $('themeMenu');
+  if (!menu) return;
+  if (!e.target.closest('.theme-toggle')) menu.classList.remove('open');
+});
+
+
+/* =====================================================
+   7. UTM GENERATION
+   ===================================================== */
+
+function getValue(selectId, customId) {
+  const sel = $(selectId);
+  if (sel.value === 'custom') return $(customId).value;
+  return sel.value;
+}
+
+function buildCampaign(mes, division) {
+  if (!mes || !division) return '';
+  return `sifrah-${mes}-${division}`;
+}
+
+function buildContent({ mes, ano, division, objetivo, audiencia, formato, tema, version }) {
+  if (!mes || !division || !ano) return '';
+  const ano2 = String(ano).slice(-2);  // últimos 2 dígitos: 2026 → '26'
+  const parts = [`sifrah-${mes}-${ano2}-${division}`];
+  if (objetivo) parts.push(objetivo);
+  if (division === 'ecom' && audiencia) parts.push(sanitizeForUTM(audiencia));
+  if (formato) parts.push(sanitizeForUTM(formato));
+  if (tema) parts.push(sanitizeForUTM(tema));
+  if (version) parts.push(String(version));
+  return parts.join('-');
+}
+
+function readForm() {
+  const urlSel = $('urlDestino').value;
+  const url = urlSel === 'custom' ? $('urlCustom').value.trim() : urlSel;
+
+  return {
+    url,
+    division: $('division').value,
+    plataforma: getValue('plataforma', 'plataformaCustom'),
+    objetivo: $('objetivo').value,
+    audiencia: getValue('audiencia', 'audienciaCustom'),
+    formato: $('formato').value,
+    tema: $('tema').value,
+    mes: $('mes').value,
+    ano: $('ano').value,
+    version: $('version').value
+  };
+}
+
+function generateUTM(e) {
+  if (e) e.preventDefault();
+  const f = readForm();
+
+  // Validaciones
+  if (!f.url) { toast('Selecciona una URL de destino', 'error'); return; }
+  if (!/^https?:\/\//i.test(f.url)) { toast('La URL debe empezar con http:// o https://', 'error'); return; }
+  const parsed = parseAndCleanURL(f.url);
+  if (!parsed.ok) { toast('URL inválida', 'error'); return; }
+
+  if (!f.division)   { toast('Selecciona una división', 'error'); return; }
+  if (!f.plataforma) { toast('Selecciona una plataforma', 'error'); return; }
+  if (!f.objetivo)   { toast('Selecciona un objetivo', 'error'); return; }
+  if (!f.formato)    { toast('Ingresa un formato', 'error'); return; }
+  if (!f.tema)       { toast('Ingresa un tema', 'error'); return; }
+  if (!f.mes)        { toast('Selecciona un mes', 'error'); return; }
+  if (f.division === 'ecom' && !f.audiencia) {
+    toast('Audiencia es obligatoria para Ecom', 'error'); return;
+  }
+
+  // Sanitización + construcción
+  const medium = DIVISION_MEDIUM_MAP[f.division];
+  const source = sanitizeForUTM(f.plataforma);
+  const campaign = buildCampaign(f.mes, f.division);
+  const content = buildContent(f);
+
+  // URL final con manejo de fragments y strip de utm_* preexistentes
+  const fullUrl = buildFinalURL(f.url, {
+    utm_source: source,
+    utm_medium: medium,
+    utm_campaign: campaign,
+    utm_content: content
+  });
+
+  // Validar longitud máxima razonable
+  if (fullUrl.length > 2000) {
+    toast('La URL final es muy larga (>2000 chars). Acorta el tema.', 'warning');
+  }
+
+  // Crear entry en historial
+  const entry = {
+    id: uid('utm'),
+    division: f.division,
+    plataforma: f.plataforma,
+    medium,
+    objetivo: f.objetivo,
+    audiencia: f.audiencia,
+    formato: f.formato,
+    tema: f.tema,
+    mes: f.mes,
+    ano: f.ano,
+    version: f.version,
+    urlDestino: f.url,
+    utm_source: source,
+    utm_medium: medium,
+    utm_campaign: campaign,
+    utm_content: content,
+    urlCompleta: fullUrl,
+    createdAt: new Date().toISOString(),
+    urlStatus: { status: 'checking', message: 'Verificando...' }
+  };
+  state.history.unshift(entry);
+  saveHistory();
+
+  // Mostrar resultado
+  $('resultText').textContent = fullUrl;
+  $('resultContainer').classList.remove('hidden');
+  $('resultContainer').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  renderHistory();
+  updateStats();
+  toast('UTM generada · verificando URL...', 'success');
+
+  // Verificación en background
+  checkURL(fullUrl).then(result => {
+    entry.urlStatus = result;
+    saveHistory();
+    renderHistory();
+    if (result.status === 'ok') toast('URL verificada correctamente', 'success');
+    else if (result.status === 'unknown') toast('URL no verificable (CORS)', 'warning');
+    else if (result.status === 'warning') toast('URL con redirect', 'warning');
+    else toast('URL no accesible o con error', 'error');
+  });
+}
+
+function copyResult() {
+  const text = $('resultText').textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = $('copyBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = '<i data-lucide="check" class="icon"></i> Copiado';
+    refreshIcons();
+    toast('URL copiada al portapapeles', 'success');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<i data-lucide="clipboard-copy" class="icon"></i> Copiar';
+      refreshIcons();
+    }, 2000);
+  }).catch(() => toast('Error al copiar', 'error'));
+}
+
+function resetForm() {
+  $('utmForm').reset();
+  $('urlCustom').classList.add('hidden');
+  $('plataformaCustom').classList.add('hidden');
+  $('audienciaCustom').classList.add('hidden');
+  $('audienciaGroup').classList.add('hidden');
+  $('medium').value = '';
+  $('resultContainer').classList.add('hidden');
+  populateYearSelect();
+  populateMonthDefault();
+  toast('Formulario limpio');
+}
+
+
+/* =====================================================
+   8. HISTORY
+   ===================================================== */
+
+function renderHistory() {
+  const c = $('utmList');
+  if (!c) return;
+  c.innerHTML = '';
+
+  if (state.history.length === 0) {
+    c.innerHTML = `
+      <div class="empty-state">
+        <i data-lucide="inbox" class="icon-lg" style="width:48px;height:48px;"></i>
+        <h3>Sin UTMs aún</h3>
+        <p>Crea tu primera UTM con el formulario de la izquierda.</p>
+      </div>`;
+    refreshIcons();
+    return;
+  }
+
+  state.history.forEach((u, idx) => {
+    const item = document.createElement('div');
+    item.className = 'utm-item';
+    if (u.urlStatus && u.urlStatus.status) item.classList.add('url-' + u.urlStatus.status);
+
+    let badge = '';
+    if (u.urlStatus) {
+      const st = u.urlStatus;
+      if (st.status === 'checking')      badge = `<span class="url-status-badge checking">Verificando...</span>`;
+      else if (st.status === 'ok')       badge = `<span class="url-status-badge ok">OK ${st.code || ''}</span>`;
+      else if (st.status === 'warning')  badge = `<span class="url-status-badge warning">Redirect</span>`;
+      else if (st.status === 'error')    badge = `<span class="url-status-badge error">Error</span>`;
+      else if (st.status === 'unknown')  badge = `<span class="url-status-badge unknown">CORS</span>`;
+    }
+
+    item.innerHTML = `
+      <div class="utm-header">
+        <div class="utm-campaign">${escapeHTML(u.utm_campaign)} ${badge}</div>
+        <div class="utm-actions">
+          <button class="utm-action-btn" onclick="copyFromHistory(${idx})" title="Copiar UTM"><i data-lucide="clipboard-copy" class="icon"></i></button>
+          <button class="utm-action-btn delete" onclick="deleteFromHistory(${idx})" title="Eliminar"><i data-lucide="trash-2" class="icon"></i></button>
+        </div>
+      </div>
+      <div class="utm-date">${new Date(u.createdAt).toLocaleString('es-PE')}</div>
+      <div class="utm-url">${escapeHTML(u.urlCompleta)}</div>
+    `;
+    c.appendChild(item);
+  });
+  refreshIcons();
+}
+
+function updateStats() {
+  $('totalCount').textContent = state.history.length;
+  $('brandingCount').textContent = state.history.filter(x => x.division === 'branding').length;
+  $('retailCount').textContent = state.history.filter(x => x.division === 'retail').length;
+  $('ecomCount').textContent = state.history.filter(x => x.division === 'ecom').length;
+}
+
+function copyFromHistory(idx) {
+  const entry = state.history[idx];
+  if (!entry) return;
+  navigator.clipboard.writeText(entry.urlCompleta).then(() => toast('URL copiada', 'success'));
+}
+
+async function deleteFromHistory(idx) {
+  const ok = await showConfirm('¿Eliminar esta UTM del historial? Esta acción no se puede deshacer.', 'Eliminar UTM', 'Eliminar');
+  if (!ok) return;
+  state.history.splice(idx, 1);
+  saveHistory();
+  renderHistory();
+  updateStats();
+  toast('UTM eliminada');
+}
+
+async function clearHistory() {
+  if (state.history.length === 0) { toast('El historial ya está vacío'); return; }
+  const ok = await showConfirm(`¿Borrar todas las UTMs del historial (${state.history.length})? Considera exportar a CSV antes.`, 'Limpiar historial', 'Borrar todo');
+  if (!ok) return;
+  state.history = [];
+  saveHistory();
+  renderHistory();
+  updateStats();
+  toast('Historial borrado');
+}
+
+
+/* =====================================================
+   9. EXPORT
+   ===================================================== */
+
+function exportCSV() {
+  if (!state.history.length) { toast('Sin UTMs para exportar', 'warning'); return; }
+  const headers = ['createdAt','division','plataforma','medium','objetivo','audiencia','formato','tema','mes','ano','version','utm_source','utm_medium','utm_campaign','utm_content','urlDestino','urlCompleta','urlStatus'];
+  const rows = state.history.map(u => headers.map(k => {
+    let v = u[k];
+    if (k === 'urlStatus') v = u.urlStatus ? u.urlStatus.status : '';
+    return `"${String(v ?? '').replace(/"/g, '""')}"`;
+  }).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `utm_sifrah_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  toast('CSV descargado', 'success');
+}
+
+async function exportExcel() {
+  if (!state.history.length) { toast('Sin UTMs para exportar', 'warning'); return; }
+  try {
+    toast('Cargando Excel...');
+    const XLSX = await import('https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs');
+    const headers = [
+      'Fecha','División','Plataforma','Medium','Objetivo','Audiencia','Formato','Tema','Mes','Año','Versión',
+      'utm_source','utm_medium','utm_campaign','utm_content','URL destino','URL etiquetada','Status'
+    ];
+    const rows = state.history.map(u => [
+      new Date(u.createdAt).toLocaleString('es-PE'),
+      u.division, u.plataforma, u.medium, u.objetivo, u.audiencia || '',
+      u.formato, u.tema, u.mes, u.ano, u.version || '',
+      u.utm_source, u.utm_medium, u.utm_campaign, u.utm_content,
+      u.urlDestino, u.urlCompleta, u.urlStatus ? u.urlStatus.status : ''
+    ]);
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+    ws['!cols'] = headers.map(() => ({ wch: 18 }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'UTMs Sifrah');
+    XLSX.writeFile(wb, `utm_sifrah_${new Date().toISOString().split('T')[0]}.xlsx`);
+    toast('Excel descargado', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('Error al exportar Excel · usa CSV', 'error');
+  }
+}
+
+
+/* =====================================================
+   10. THEME
+   ===================================================== */
+
+function loadTheme() {
+  const saved = localStorage.getItem('linky_sifrah_theme') || 'dark';
+  state.currentTheme = saved;
+  document.documentElement.setAttribute('data-theme', saved);
+  updateThemeMenu();
+}
+
+function changeTheme(theme) {
+  state.currentTheme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('linky_sifrah_theme', theme);
+  updateThemeMenu();
+  $('themeMenu').classList.remove('open');
+  toast(`Tema: ${theme}`);
+}
+
+function updateThemeMenu() {
+  document.querySelectorAll('.theme-option').forEach(b => {
+    b.classList.toggle('active', b.dataset.theme === state.currentTheme);
+  });
+}
+
+function toggleThemeMenu() {
+  $('themeMenu').classList.toggle('open');
+}
+
+
+/* =====================================================
+   11. MODALS
+   ===================================================== */
+
+function openHelp() { $('helpModal').classList.add('open'); refreshIcons(); }
+function closeHelp() { $('helpModal').classList.remove('open'); }
+
+function openConfigModal() { $('configModal').classList.add('open'); renderURLsList(); renderAudienciasList(); renderFormatosList(); refreshIcons(); }
+function closeConfigModal() { $('configModal').classList.remove('open'); }
+
+function switchConfigTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-' + tab));
+}
+
+// Cierra modales con Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeHelp(); closeConfigModal();
+    if ($('confirmModal').classList.contains('open')) resolveConfirm(false);
+  }
+});
+
+
+/* =====================================================
+   12. CONFIG MANAGEMENT (URLs / Audiencias / Formatos)
+   ===================================================== */
+
+function renderURLsList() {
+  const c = $('urlsList');
+  c.innerHTML = '';
+  state.config.urls.forEach(u => {
+    const div = document.createElement('div');
+    div.className = 'config-item';
+    div.innerHTML = `
+      <div class="config-item-info">
+        <strong>${escapeHTML(u.label)} ${u.isCore ? '<span class="is-core-badge">CORE</span>' : ''}</strong>
+        <small>${escapeHTML(u.url)}</small>
+      </div>
+      <button class="utm-action-btn delete" onclick="deleteURL('${u.id}')" title="Eliminar"><i data-lucide="trash-2" class="icon"></i></button>
+    `;
+    c.appendChild(div);
+  });
+  refreshIcons();
+}
+
+function addURL() {
+  const label = $('newUrlLabel').value.trim();
+  const url = $('newUrlValue').value.trim();
+  if (!label || !url) { toast('Completa etiqueta y URL', 'error'); return; }
+  if (!/^https?:\/\//i.test(url)) { toast('La URL debe empezar con http:// o https://', 'error'); return; }
+  state.config.urls.push({ id: uid('url'), label, url, isCore: false });
+  saveConfig();
+  renderURLsList();
+  populateURLsSelect();
+  $('newUrlLabel').value = '';
+  $('newUrlValue').value = '';
+  toast('URL agregada', 'success');
+}
+
+async function deleteURL(id) {
+  const item = state.config.urls.find(u => u.id === id);
+  if (!item) return;
+  const ok = await showConfirm(`¿Eliminar la URL "${item.label}"?`, 'Eliminar URL', 'Eliminar');
+  if (!ok) return;
+  state.config.urls = state.config.urls.filter(u => u.id !== id);
+  saveConfig();
+  renderURLsList();
+  populateURLsSelect();
+  toast('URL eliminada');
+}
+
+function renderAudienciasList() {
+  const c = $('audienciasList');
+  c.innerHTML = '';
+  state.config.audiencias.forEach(a => {
+    const div = document.createElement('div');
+    div.className = 'config-item';
+    div.innerHTML = `
+      <div class="config-item-info">
+        <strong>${escapeHTML(a.label)} ${a.isCore ? '<span class="is-core-badge">CORE</span>' : ''}</strong>
+        <small>UTM: <code>${escapeHTML(a.value)}</code></small>
+      </div>
+      <button class="utm-action-btn delete" onclick="deleteAudience('${a.id}')" title="Eliminar"><i data-lucide="trash-2" class="icon"></i></button>
+    `;
+    c.appendChild(div);
+  });
+  refreshIcons();
+}
+
+function addAudience() {
+  const label = $('newAudLabel').value.trim();
+  const value = sanitizeForUTM($('newAudValue').value.trim());
+  if (!label || !value) { toast('Completa etiqueta y valor', 'error'); return; }
+  state.config.audiencias.push({ id: uid('aud'), label, value, isCore: false });
+  saveConfig();
+  renderAudienciasList();
+  populateAudienciasSelect();
+  $('newAudLabel').value = '';
+  $('newAudValue').value = '';
+  toast('Audiencia agregada', 'success');
+}
+
+async function deleteAudience(id) {
+  const item = state.config.audiencias.find(a => a.id === id);
+  if (!item) return;
+  const ok = await showConfirm(`¿Eliminar la audiencia "${item.label}"?`, 'Eliminar audiencia', 'Eliminar');
+  if (!ok) return;
+  state.config.audiencias = state.config.audiencias.filter(a => a.id !== id);
+  saveConfig();
+  renderAudienciasList();
+  populateAudienciasSelect();
+  toast('Audiencia eliminada');
+}
+
+function renderFormatosList() {
+  const c = $('formatosList');
+  c.innerHTML = '';
+  state.config.formatos.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'config-item';
+    div.innerHTML = `
+      <div class="config-item-info">
+        <strong>${escapeHTML(f)}</strong>
+      </div>
+      <button class="utm-action-btn delete" onclick="deleteFormato('${escapeHTML(f)}')" title="Eliminar"><i data-lucide="trash-2" class="icon"></i></button>
+    `;
+    c.appendChild(div);
+  });
+  refreshIcons();
+}
+
+function addFormato() {
+  const v = sanitizeForUTM($('newFormato').value.trim());
+  if (!v) { toast('Ingresa un formato', 'error'); return; }
+  if (state.config.formatos.includes(v)) { toast('Ya existe ese formato', 'warning'); return; }
+  state.config.formatos.push(v);
+  saveConfig();
+  renderFormatosList();
+  populateFormatList();
+  $('newFormato').value = '';
+  toast('Formato agregado', 'success');
+}
+
+async function deleteFormato(f) {
+  const ok = await showConfirm(`¿Eliminar el formato "${f}"?`, 'Eliminar formato', 'Eliminar');
+  if (!ok) return;
+  state.config.formatos = state.config.formatos.filter(x => x !== f);
+  saveConfig();
+  renderFormatosList();
+  populateFormatList();
+  toast('Formato eliminado');
+}
+
+async function resetConfig() {
+  const ok = await showConfirm('¿Restaurar todos los valores por defecto? Se perderán los cambios personalizados de URLs, audiencias y formatos.', 'Restaurar defaults', 'Restaurar');
+  if (!ok) return;
+  state.config = getDefaultConfig();
+  saveConfig();
+  renderURLsList();
+  renderAudienciasList();
+  renderFormatosList();
+  populateURLsSelect();
+  populateAudienciasSelect();
+  populateFormatList();
+  toast('Configuración restaurada');
+}
+
+
+/* =====================================================
+   13. INITIALIZATION
+   ===================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadConfig();
+  loadHistory();
+
+  populateURLsSelect();
+  populateAudienciasSelect();
+  populateFormatList();
+  populateYearSelect();
+  populateMonthDefault();
+
+  setupFormListeners();
+
+  // Limpieza en vivo en inputs del modal de Ajustes que van a UTM
+  // (NO en labels ni URL value, que son legibles para humanos / URLs completas)
+  ['newAudValue', 'newFormato'].forEach(id => {
+    const el = $(id);
+    if (el) el.addEventListener('input', cleanInputLive);
+  });
+
+  loadTheme();
+  renderHistory();
+  updateStats();
+  refreshIcons();
+
+  console.log('Linky Sifrah inicializado correctamente · ' + VERSION_TAG);
+});
+
+// Expone funciones a window para los onclick inline
+window.openHelp = openHelp;
+window.closeHelp = closeHelp;
+window.openConfigModal = openConfigModal;
+window.closeConfigModal = closeConfigModal;
+window.switchConfigTab = switchConfigTab;
+window.changeTheme = changeTheme;
+window.toggleThemeMenu = toggleThemeMenu;
+window.copyResult = copyResult;
+window.resetForm = resetForm;
+window.copyFromHistory = copyFromHistory;
+window.deleteFromHistory = deleteFromHistory;
+window.clearHistory = clearHistory;
+window.exportCSV = exportCSV;
+window.exportExcel = exportExcel;
+window.addURL = addURL;
+window.deleteURL = deleteURL;
+window.addAudience = addAudience;
+window.deleteAudience = deleteAudience;
+window.addFormato = addFormato;
+window.deleteFormato = deleteFormato;
+window.resetConfig = resetConfig;
+window.resolveConfirm = resolveConfirm;
+</script>
+
+</body>
+</html>
