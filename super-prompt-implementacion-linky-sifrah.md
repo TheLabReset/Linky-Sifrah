@@ -1,6 +1,6 @@
 # 🚀 Super Prompt para Claude Code
 
-## Implementación del repo `RUTEO-SIFRAH` a partir de `RUTEO-SF` + MVP HTML aprobado
+## Implementación del repo `Linky-SIFRAH` a partir de `RUTEO-SF` + MVP HTML aprobado
 
 ---
 
@@ -16,7 +16,7 @@ Soy Alonso, lidero **The Lab** en **Reset**, una agencia de medios 360° en Lima
 
 **Lo que vamos a hacer:**
 
-Crear un nuevo repo público en GitHub llamado `RUTEO-SIFRAH` que mantenga la **arquitectura modular del SF** (estructura de carpetas, separación de archivos JS por dominio, sistema de CSS tokens, build con Vite, deploy en Netlify), pero con la **lógica del MVP de Sifrah** (estructura UTM, catálogos, sanitización en vivo, año en content, audiencia condicional, etc).
+Crear un nuevo repo público en GitHub llamado `Linky-SIFRAH` que mantenga la **arquitectura modular del SF** (estructura de carpetas, separación de archivos JS por dominio, sistema de CSS tokens, build con Vite, deploy en Netlify), pero con la **lógica del MVP de Sifrah** (estructura UTM, catálogos, sanitización en vivo, año en content, audiencia condicional, etc).
 
 ---
 
