@@ -1,18 +1,36 @@
 /**
  * Linky · Sifrah · Entry point.
  *
- * Fase 2 actual: scaffolding HTML + utilities + sanitize. Las fases 3 y 4
- * agregan los módulos de form, utm, history, export, theme, modales y config.
+ * Fase 3: config + form populates + listeners + generación de UTMs con
+ * validaciones, sanitización y URL final etiquetada (incluye fix de
+ * fragments y de utm_* preexistentes). El historial, export, themes y
+ * modales de UI se conectan en Fase 4.
  */
 
+import { loadConfig } from './config.js';
+import {
+  setupFormListeners,
+  populateURLsSelect,
+  populateAudienciasSelect,
+  populateFormatList,
+  populateYearSelect,
+  populateMonthDefault,
+} from './form.js';
 import { refreshIcons } from './utils.js';
 import { VERSION_TAG } from './constants.js';
-// Carga sanitize.js para que `import.meta` resuelva su módulo y verificar
-// que no hay errores de sintaxis durante el wiring inicial.
-import './sanitize.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  loadConfig();
+
+  populateURLsSelect();
+  populateAudienciasSelect();
+  populateFormatList();
+  populateYearSelect();
+  populateMonthDefault();
+
+  setupFormListeners();
+
   refreshIcons();
   // eslint-disable-next-line no-console
-  console.log(`Linky Sifrah · scaffolding OK · ${VERSION_TAG}`);
+  console.log(`Linky Sifrah · core OK · ${VERSION_TAG}`);
 });
